@@ -1,0 +1,128 @@
+# Default seed data for database initialization
+# This file contains the default experiment types that will be seeded into the database
+# when it is first initialized.
+
+model_types:
+  - id: 1
+    name: "Credit Models"
+    enabled: true
+    status: "available"
+    description: |
+      Credit risk origination
+      Behavior
+      Loss Expected by Default
+      Leverage at Default
+      Loan Limit Definition
+      Rejected Inference Parceling
+      Rejected Inference Fuzzy Augmentation
+
+  - id: 2
+    name: "Fraud Models"
+    enabled: true
+    status: "available"
+    description: |
+      Fraud detection
+      Behavior
+      Loss Expected by Default
+      Leverage at Default
+      Loan Limit Definition
+      Rejected Inference Parceling
+      Rejected Inference Fuzzy Augmentation
+
+  - id: 3
+    name: "Marketing Models"
+    enabled: true
+    status: "available"
+    description: |
+      Marketing models
+      Behavior
+      Loss Expected by Default
+      Leverage at Default
+      Loan Limit Definition
+      Rejected Inference Parceling
+      Rejected Inference Fuzzy Augmentation
+
+  - id: 4
+    name: "Try Diverse ML"
+    enabled: true
+    status: "available"
+    description: |
+      Try diverse ML models
+      Behavior
+      Loss Expected by Default
+      Leverage at Default
+      Loan Limit Definition
+      Rejected Inference Parceling
+      Rejected Inference Fuzzy Augmentation
+
+  - id: 5
+    name: "Collection & Leverage"
+    enabled: false
+    status: "request_access"
+    description: |
+      Collection & Leverage
+      Behavior
+      Loss Expected by Default
+      Leverage at Default
+      Loan Limit Definition
+      Rejected Inference Parceling
+      Rejected Inference Fuzzy Augmentation
+
+  - id: 6
+    name: "Income & Leverage"
+    enabled: false
+    status: "request_access"
+    description: |
+      Income & Leverage
+      Behavior
+      Loss Expected by Default
+      Leverage at Default
+      Loan Limit Definition
+      Rejected Inference Parceling
+      Rejected Inference Fuzzy Augmentation
+
+  - id: 7
+    name: "Pricing, Limit & Organizations"
+    enabled: false
+    status: "coming_soon"
+    description: |
+      Pricing, Limit & Organizations
+      Behavior
+      Loss Expected by Default
+      Leverage at Default
+      Loan Limit Definition
+      Rejected Inference Parceling
+      Rejected Inference Fuzzy Augmentation
+
+  - id: 8
+    name: "Human Resources"
+    enabled: false
+    status: "coming_soon"
+    description: |
+      Human Resources
+      Behavior
+      Loss Expected by Default
+      Leverage at Default
+      Loan Limit Definition
+      Rejected Inference Parceling
+      Rejected Inference Fuzzy Augmentation
+
+  - id: 9
+    name: "Treasury & Liquidity"
+    enabled: false
+    status: "coming_soon"
+    description: |
+      Treasury & Liquidity
+      Behavior
+      Loss Expected by Default
+      Leverage at Default
+      Loan Limit Definition
+      Rejected Inference Parceling
+      Rejected Inference Fuzzy Augmentation
+
+experiment_types:
+  - id: 1
+    name: "classification"
+
+  - id: 2
+    name: "regression"
