@@ -26,10 +26,10 @@ class Settings(BaseSettings):
     )
 
     # Application
-    app_name: str = "Thorcast MLOps API"
+    app_name: str = "FastAPI Boilerplate API"
     app_version: str = "0.1.0"
     debug: bool = Field(default=False, description="Enable debug mode")
-    api_prefix: str = "/api"
+    api_prefix: str = "/api/v1"
     python_version: str = "3.13"
 
     # Server

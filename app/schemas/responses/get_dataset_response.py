@@ -2,7 +2,7 @@
 Get dataset response schema.
 
 This module defines the response schema for get dataset operations,
-extending BaseMLResponse with dataset-specific fields.
+including dataset-specific fields.
 """
 
 from pydantic import BaseModel, Field

@@ -43,11 +43,11 @@ model_types:
       Rejected Inference Fuzzy Augmentation
 
   - id: 4
-    name: "Try Diverse ML"
+    name: "Try Diverse Models"
     enabled: true
     status: "available"
     description: |
-      Try diverse ML models
+      Try diverse analytical models
       Behavior
       Loss Expected by Default
       Leverage at Default

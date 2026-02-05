@@ -65,7 +65,7 @@ class TestListProjects:
 
     def test_list_projects_with_search(self, db_session: Session) -> None:
         """List projects with search filter."""
-        project1 = Project(name="Machine Learning", description="ML project")
+        project1 = Project(name="Analytics", description="Analytics project")
         project2 = Project(name="Data Analysis", description="Analysis project")
         project3 = Project(name="Web App", description="Web application")
         db_session.add_all([project1, project2, project3])
@@ -79,11 +79,11 @@ class TestListProjects:
         result = service.list_projects(pagination, sorting, search_params)
 
         assert len(result.data) == 1
-        assert result.data[0].name == "Machine Learning"
+        assert result.data[0].name == "Analytics"
 
     def test_list_projects_with_search_in_description(self, db_session: Session) -> None:
         """List projects with search matching description."""
-        project1 = Project(name="Search Test A", description="Machine Learning project")
+        project1 = Project(name="Search Test A", description="Analytics project")
         project2 = Project(name="Search Test B", description="Data analysis")
         db_session.add_all([project1, project2])
         db_session.commit()

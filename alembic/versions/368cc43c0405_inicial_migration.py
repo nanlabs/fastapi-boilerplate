@@ -59,7 +59,7 @@ def upgrade() -> None:
     sa.Column('name', sa.String(), nullable=False),
     sa.Column('description', sa.String(), nullable=True),
     sa.Column('status', sa.String(), server_default=sa.text("'draft'"), nullable=False),
-    sa.Column('ml_experiment_id', sa.String(length=36), nullable=False),
+    sa.Column('external_experiment_id', sa.String(length=36), nullable=False),
     sa.Column('project_id', sa.Integer(), nullable=False),
     sa.Column('experiment_type_id', sa.Integer(), nullable=True),
     sa.Column('model_type_id', sa.Integer(), nullable=True),
@@ -73,7 +73,7 @@ def upgrade() -> None:
     )
     op.create_index(op.f('ix_experiments_deleted_at'), 'experiments', ['deleted_at'], unique=False)
     op.create_index(op.f('ix_experiments_experiment_type_id'), 'experiments', ['experiment_type_id'], unique=False)
-    op.create_index(op.f('ix_experiments_ml_experiment_id'), 'experiments', ['ml_experiment_id'], unique=True)
+    op.create_index(op.f('ix_experiments_external_experiment_id'), 'experiments', ['external_experiment_id'], unique=True)
     op.create_index(op.f('ix_experiments_model_type_id'), 'experiments', ['model_type_id'], unique=False)
     op.create_index(op.f('ix_experiments_name'), 'experiments', ['name'], unique=False)
     op.create_index(op.f('ix_experiments_project_id'), 'experiments', ['project_id'], unique=False)
@@ -85,7 +85,7 @@ def downgrade() -> None:
     op.drop_index(op.f('ix_experiments_project_id'), table_name='experiments')
     op.drop_index(op.f('ix_experiments_name'), table_name='experiments')
     op.drop_index(op.f('ix_experiments_model_type_id'), table_name='experiments')
-    op.drop_index(op.f('ix_experiments_ml_experiment_id'), table_name='experiments')
+    op.drop_index(op.f('ix_experiments_external_experiment_id'), table_name='experiments')
     op.drop_index(op.f('ix_experiments_experiment_type_id'), table_name='experiments')
     op.drop_index(op.f('ix_experiments_deleted_at'), table_name='experiments')
     op.drop_table('experiments')

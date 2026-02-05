@@ -138,10 +138,10 @@ class TestListExperiments:
         db_session.commit()
 
         exp1 = Experiment(
-            name="Machine Learning Exp",
+            name="Analytics Experiment",
             project_id=project.id,
             experiment_type_id=experiment_type.id,
-            description="ML experiment",
+            description="Analytics experiment",
         )
         exp2 = Experiment(
             name="Data Analysis Exp",
@@ -157,7 +157,7 @@ class TestListExperiments:
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert len(data["data"]) == 1
-        assert data["data"][0]["name"] == "Machine Learning Exp"
+        assert data["data"][0]["name"] == "Analytics Experiment"
 
     def test_list_experiments_with_experiment_type_filter(
         self, client: TestClient, db_session: Session

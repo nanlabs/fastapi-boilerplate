@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+
+# ============================================================================
+# FastAPI Boilerplate - Environment Configuration
+# ============================================================================
+# This file is used by direnv to automatically load environment variables.
+# direnv will automatically load this file when you enter the project directory.
+#
+# Setup: Run 'direnv allow' once to enable direnv for this project.
+#
+# The .envrc file provides default values for all environment variables.
+# If a .env file exists, it will be automatically loaded and can override
+# these defaults. See .env.example for detailed documentation of each variable.
+
+# ============================================================================
+# Application Configuration
+# ============================================================================
+
+# Debug mode
+# Enable detailed error messages and debugging information
+# Values: true, false
+# Default: false
+export DEBUG="${DEBUG:-false}"
+
+# API prefix (versioned)
+# Base path for all API endpoints
+# Default: /api/v1
+export API_PREFIX="${API_PREFIX:-/api/v1}"
+
+# ============================================================================
+# Server Configuration
+# ============================================================================
+
+# Server host address
+# Use 0.0.0.0 to accept connections from any network interface
+# Use 127.0.0.1 to only accept local connections
+# Default: 127.0.0.1
+export HOST="${HOST:-127.0.0.1}"
+
+# Server port
+# The port on which the FastAPI server will listen
+# Default: 8000
+export PORT="${PORT:-8000}"
+
+# ============================================================================
+# Database Configuration
+# ============================================================================
+
+# Database connection URL
+# SQLite database path (relative to project root or executable location)
+# For SQLite: sqlite:///./data/app.db
+# For PostgreSQL: postgresql://user:password@localhost/dbname
+# For MySQL: mysql://user:password@localhost/dbname
+# Default: sqlite:///./data/app.db
+export DATABASE_URL="${DATABASE_URL:-sqlite:///./data/app.db}"
+
+# ==========================================================================
+# CORS Configuration
+# ==========================================================================
+
+# CORS allowed origins
+# Comma-separated list of allowed origins for Cross-Origin Resource Sharing
+# This is essential when the frontend runs on a different port or domain
+# Examples:
+#   - Single origin: http://localhost:3000
+#   - Multiple origins: http://localhost:3000,http://localhost:3001,http://localhost:5173
+#   - Production: https://app.example.com,https://www.example.com
+# Default: http://localhost:3000,http://localhost:3001,http://localhost:5173
+export CORS_ORIGINS="${CORS_ORIGINS:-http://localhost:3000,http://localhost:3001,http://localhost:5173}"
+
+# ============================================================================
+# Load Environment Variables from .env (Optional)
+# ============================================================================
+# If a .env file exists, it will be automatically loaded and can override
+# the default values defined above. This allows for project-specific
+# configuration without modifying this .envrc file.
+#
+# To create a .env file: cp .env.example .env
+# See .env.example for detailed documentation of each variable.
+if [[ -f .env ]]; then
+  echo "📄 Loading environment variables from .env file..."
+  set -a
+  source .env
+  set +a
+else
+  echo "💡 Tip: Create .env from .env.example to customize configuration (optional)"
+fi
+
+# ============================================================================
+# Python Environment Setup
+# ============================================================================
+# Activate uv-managed virtual environment if available
+if [[ -f pyproject.toml ]]; then
+  if command -v uv > /dev/null 2>&1; then
+    if [[ -d .venv ]]; then
+      echo "🐍 Using uv virtual environment..."
+    else
+      echo "💡 Tip: Run 'make install-dev' to set up dependencies"
+    fi
+  else
+    echo "⚠️  uv not found. Install with: curl -LsSf https://astral.sh/uv/install.sh | sh"
+  fi
+fi
+
+# ============================================================================
+# Helpful Commands
+# ============================================================================
+echo ""
+echo "🚀 FastAPI Boilerplate - Available Commands:"
+echo "  make help          - Show all available make commands"
+echo "  make install-dev   - Install development dependencies"
+echo "  make dev           - Run server with auto-reload"
+echo "  make run           - Run server"
+echo "  make test          - Run all tests"
+echo "  make lint          - Run code linting"
+echo "  make format        - Format code with ruff"
+echo "  make init-db       - Initialize database"
+echo ""
+echo "📚 Documentation:"
+echo "  See docs/development.md for complete setup guide"
+echo ""

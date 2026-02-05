@@ -5,14 +5,18 @@ Welcome to the FastAPI Boilerplate documentation. This folder contains all the i
 ## 📖 Contents
 
 ### [🚀 Getting Started](./getting-started.md)
+
 **Quick start guide to begin using the boilerplate**
+
 - Installation and initial setup
 - First steps with Dev Container
 - Essential commands
 - First developments
 
 ### [💻 Development Guide](./development.md)
+
 **Complete development guide**
+
 - Project structure
 - Creating endpoints
 - Testing
@@ -21,7 +25,9 @@ Welcome to the FastAPI Boilerplate documentation. This folder contains all the i
 - Troubleshooting
 
 ### [🏗️ Architecture](./architecture.md)
+
 **Architecture and technical decisions**
+
 - Design decisions
 - Comparison with original Thorcast
 - Technologies used
@@ -29,7 +35,9 @@ Welcome to the FastAPI Boilerplate documentation. This folder contains all the i
 - Consolidation with Ruff
 
 ### [📝 API Documentation](./api.md)
+
 **API documentation**
+
 - Available endpoints
 - Data models
 - Usage examples

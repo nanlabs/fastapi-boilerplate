@@ -1,7 +1,7 @@
 """
 Status enumeration for operations.
 
-This module defines the status enum used across all ML operations
+This module defines the status enum used across workflow operations
 to track their execution state.
 """
 
@@ -12,7 +12,7 @@ class Status(str, Enum):
     """
     Status of an operation.
 
-    Defines the lifecycle states used by ML workflow operations.
+    Defines the lifecycle states used by workflow operations.
     """
 
     PENDING = "pending"

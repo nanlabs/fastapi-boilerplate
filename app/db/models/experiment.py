@@ -2,14 +2,14 @@
 Experiment database model.
 
 This module defines the Experiment database model using SQLAlchemy ORM.
-Experiments represent individual machine learning workflow executions within
-a project, categorized by type such as credit models, fraud models, or
-marketing models.
+Experiments represent individual workflow executions within
+a project, categorized by type such as classification, regression, or
+custom analysis categories.
 
 The Experiment model tracks experiment metadata including name, type,
 description, and automatic timestamps. Each experiment belongs to a single
 project through a foreign key relationship, enabling project-based
-organization and management of ML experiments.
+organization and management of experiments.
 """
 
 from __future__ import annotations
@@ -44,9 +44,9 @@ class Experiment(Base):
     )
     current_step: Mapped[int] = mapped_column(Integer, nullable=False, server_default=text("0"))
 
-    # Public/stable identifier for ML side and external references
-    _ml_experiment_id: Mapped[str] = mapped_column(
-        "ml_experiment_id",
+    # Public/stable identifier for external systems and references
+    _external_experiment_id: Mapped[str] = mapped_column(
+        "external_experiment_id",
         String(36),
         nullable=False,
         unique=True,
@@ -93,6 +93,6 @@ class Experiment(Base):
     dataset_file: Mapped[DatasetFile | None] = relationship("DatasetFile")
 
     @property
-    def ml_experiment_id(self) -> UUID:
-        """Return ML experiment id as a UUID instance."""
-        return UUID(cast(str, self._ml_experiment_id))
+    def external_experiment_id(self) -> UUID:
+        """Return external experiment id as a UUID instance."""
+        return UUID(cast(str, self._external_experiment_id))

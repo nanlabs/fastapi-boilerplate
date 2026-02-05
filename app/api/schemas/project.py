@@ -19,8 +19,8 @@ class ProjectCreate(ProjectBase):
     model_config = ConfigDict(
         json_schema_extra={
             "example": {
-                "name": "Customer Churn Prediction",
-                "description": "ML project to predict customer churn using historical data",
+                "name": "Customer Insights",
+                "description": "Analytics project focused on customer behavior trends",
             }
         }
     )
@@ -38,8 +38,8 @@ class ProjectUpdate(BaseModel):
     model_config = ConfigDict(
         json_schema_extra={
             "example": {
-                "name": "Customer Churn Prediction v2",
-                "description": "Updated ML project with improved features",
+                "name": "Customer Insights v2",
+                "description": "Updated project with refined segmentation logic",
             }
         }
     )
@@ -61,8 +61,8 @@ class ProjectResponse(ProjectBase):
         json_schema_extra={
             "example": {
                 "id": 1,
-                "name": "Customer Churn Prediction",
-                "description": "ML project to predict customer churn using historical data",
+                "name": "Customer Insights",
+                "description": "Analytics project focused on customer behavior trends",
                 "created_at": "2025-01-20T10:30:00.000000",
                 "updated_at": "2025-01-20T10:30:00.000000",
                 "experiments_count": 5,

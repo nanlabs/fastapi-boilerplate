@@ -172,9 +172,9 @@ class TestGetExperiment:
         # Verify ml_experiment_id property returns UUID (access from model, not response)
         db_experiment = db_session.query(Experiment).filter(Experiment.id == experiment_id).first()
         assert db_experiment is not None
-        assert isinstance(db_experiment.ml_experiment_id, UUID)
+            assert isinstance(db_experiment.external_experiment_id, UUID)
         # Verify the UUID can be converted back to string (round-trip test)
-        assert str(db_experiment.ml_experiment_id) == str(UUID(str(db_experiment.ml_experiment_id)))
+            assert str(db_experiment.external_experiment_id) == str(UUID(str(db_experiment.external_experiment_id)))
 
     def test_get_experiment_not_found(self, db_session: Session) -> None:
         """Raise error when experiment not found."""
@@ -244,10 +244,10 @@ class TestListExperiments:
         db_session.commit()
 
         exp1 = Experiment(
-            name="Machine Learning Exp",
+            name="Analytics Experiment",
             project_id=project.id,
             experiment_type_id=experiment_type.id,
-            description="ML experiment",
+            description="Analytics experiment",
         )
         exp2 = Experiment(
             name="Data Analysis Exp",
@@ -266,7 +266,7 @@ class TestListExperiments:
         result = service.list_experiments(pagination, sorting, search_params)
 
         assert len(result.data) == 1
-        assert result.data[0].name == "Machine Learning Exp"
+        assert result.data[0].name == "Analytics Experiment"
 
     def test_list_experiments_with_search_in_description(self, db_session: Session) -> None:
         """List experiments with search matching description."""
@@ -279,7 +279,7 @@ class TestListExperiments:
             name="Search Test A",
             project_id=project.id,
             experiment_type_id=experiment_type.id,
-            description="Machine Learning experiment",
+            description="Analytics experiment",
         )
         exp2 = Experiment(
             name="Search Test B",

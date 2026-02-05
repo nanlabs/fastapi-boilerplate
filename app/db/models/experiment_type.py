@@ -2,9 +2,9 @@
 Experiment type database model.
 
 This module defines the ExperimentType database model using SQLAlchemy ORM.
-Experiment types represent the fundamental categories of machine learning experiments,
+Experiment types represent the fundamental categories of experiments,
 such as "classification" and "regression". These are simple, foundational types that
-categorize the nature of the ML experiment being performed.
+categorize the nature of the experiment being performed.
 """
 
 from __future__ import annotations
@@ -23,9 +23,9 @@ if TYPE_CHECKING:
 class ExperimentType(Base):
     """Experiment type model for storing experiment type information.
 
-    Represents a fundamental category of machine learning experiments, such as
+    Represents a fundamental category of experiments, such as
     "classification" or "regression". These types are simple identifiers that
-    categorize the nature of the ML experiment being performed.
+    categorize the nature of the experiment being performed.
 
     Examples from seed data:
     - classification: For classification tasks

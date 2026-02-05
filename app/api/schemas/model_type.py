@@ -8,7 +8,7 @@ from app.schemas.common.base import ModelTypeStatus
 class ModelTypeResponse(BaseModel):
     """Schema for model type response.
 
-    Represents a category of machine learning models with rich metadata,
+    Represents a category of analytical models with rich metadata,
     such as "Credit Models", "Fraud Models", etc.
     """
 

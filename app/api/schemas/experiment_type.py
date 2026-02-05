@@ -6,7 +6,7 @@ from pydantic import BaseModel, ConfigDict, Field
 class ExperimentTypeResponse(BaseModel):
     """Schema for experiment type response.
 
-    Represents a fundamental category of machine learning experiments,
+    Represents a fundamental category of experiments,
     such as "classification" or "regression".
     """
 

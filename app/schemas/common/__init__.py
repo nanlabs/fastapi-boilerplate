@@ -1,8 +1,8 @@
 """
-Common schemas shared across ML operations.
+Common schemas shared across workflow operations.
 
 This module exports base schemas, enums, and metadata structures
-used throughout the ML workflow system.
+used throughout the workflow system.
 """
 
 from app.schemas.common.base import BaseOperation, ColumnType, OperationType

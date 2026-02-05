@@ -1,8 +1,8 @@
 """
-Base schemas for ML operations.
+Base schemas for workflow operations.
 
 This module defines the base operation class and operation type enum
-that all ML operation requests inherit from.
+that all workflow operation requests inherit from.
 """
 
 from enum import Enum
@@ -32,9 +32,9 @@ class DataPreparationType(str, Enum):
 
 class OperationType(str, Enum):
     """
-    Types of ML operations.
+    Types of workflow operations.
 
-    Enumerates supported workflow operations for ML request handling.
+    Enumerates supported workflow operations for request handling.
     """
 
     LOAD_DATASET = "load_dataset"
@@ -52,9 +52,9 @@ class OperationType(str, Enum):
 
 class BaseOperation(BaseModel):
     """
-    Base class for all ML operation requests.
+    Base class for all workflow operation requests.
 
-    Provides common metadata and operation identifiers for ML requests.
+    Provides common metadata and operation identifiers for requests.
     """
 
     metadata: OperationMetadata = Field(..., description="Operation metadata")
@@ -77,7 +77,7 @@ class ColumnType(str, Enum):
 class ExperimentStatus(str, Enum):
     """Status of an experiment.
 
-    Represents the lifecycle stages of a machine learning experiment,
+    Represents the lifecycle stages of an experiment,
     from initial creation through execution to final publication or failure.
     """
 

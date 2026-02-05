@@ -23,9 +23,9 @@ class ExperimentCreate(ExperimentBase):
     model_config = ConfigDict(
         json_schema_extra={
             "example": {
-                "name": "Baseline Model Training",
+                "name": "Baseline Analysis Run",
                 "experiment_type_id": 1,
-                "description": "Initial experiment to establish baseline performance metrics",
+                "description": "Initial run to establish baseline performance metrics",
                 "project_id": 1,
             }
         }
@@ -50,9 +50,9 @@ class ExperimentUpdate(BaseModel):
     model_config = ConfigDict(
         json_schema_extra={
             "example": {
-                "name": "Baseline Model Training - Updated",
+                "name": "Baseline Analysis Run - Updated",
                 "description": (
-                    "Updated experiment with additional features and improved hyperparameters"
+                    "Updated run with additional features and improved parameters"
                 ),
                 "project_id": 1,
             }
@@ -123,9 +123,9 @@ class ExperimentResponse(ExperimentBase):
         json_schema_extra={
             "example": {
                 "id": 1,
-                "name": "Baseline Model Training",
+                "name": "Baseline Analysis Run",
                 "experiment_type_id": 1,
-                "description": "Initial experiment to establish baseline performance metrics",
+                "description": "Initial run to establish baseline performance metrics",
                 "project_id": 1,
                 "status": "draft",
                 "current_step": 0,

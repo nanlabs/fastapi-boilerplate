@@ -2,7 +2,7 @@
 Model type database model.
 
 This module defines the ModelType database model using SQLAlchemy ORM.
-Model types represent different categories of machine learning models available
+Model types represent different categories of analytical models available
 in the system, such as "Credit Models", "Fraud Models", "Marketing Models", etc.
 Each model type has metadata including a description and enabled status.
 """
@@ -24,7 +24,7 @@ if TYPE_CHECKING:
 class ModelType(Base):
     """Model type model for storing model type information.
 
-    Represents a category of machine learning models with rich metadata. Each
+    Represents a category of analytical models with rich metadata. Each
     model type has a name, optional multiline description, and enabled status.
     """
 

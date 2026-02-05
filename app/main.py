@@ -43,7 +43,7 @@ async def lifespan(_app: FastAPI) -> AsyncGenerator[None]:
 app = FastAPI(
     title=settings.app_name,
     version=settings.app_version,
-    description="FastAPI backend for desktop app integration",
+    description="FastAPI boilerplate backend",
     debug=settings.debug,
     lifespan=lifespan,
     docs_url="/docs",
@@ -59,7 +59,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include routers
+# Include routers (versioned)
 app.include_router(health.router, prefix=settings.api_prefix)
 app.include_router(projects.router, prefix=f"{settings.api_prefix}/projects")
 app.include_router(model_types.router, prefix=f"{settings.api_prefix}/model-types")
@@ -67,12 +67,22 @@ app.include_router(experiment_types.router, prefix=f"{settings.api_prefix}/exper
 app.include_router(experiments.router, prefix=f"{settings.api_prefix}/experiments")
 app.include_router(dataset_files.router, prefix=f"{settings.api_prefix}/dataset-files")
 
+# Legacy (unversioned) routes for backward compatibility
+legacy_api_prefix = "/api"
+if legacy_api_prefix != settings.api_prefix:
+    app.include_router(health.router, prefix=legacy_api_prefix)
+    app.include_router(projects.router, prefix=f"{legacy_api_prefix}/projects")
+    app.include_router(model_types.router, prefix=f"{legacy_api_prefix}/model-types")
+    app.include_router(experiment_types.router, prefix=f"{legacy_api_prefix}/experiment-types")
+    app.include_router(experiments.router, prefix=f"{legacy_api_prefix}/experiments")
+    app.include_router(dataset_files.router, prefix=f"{legacy_api_prefix}/dataset-files")
+
 
 @app.get("/", tags=["root"])
 async def root() -> dict[str, str]:
     """Root endpoint."""
     return {
-        "message": "Welcome to Thorcast MLOps API",
+        "message": "Welcome to FastAPI Boilerplate API",
         "docs": "/docs",
         "redoc": "/redoc",
         "health": f"{settings.api_prefix}/healthz",

@@ -69,7 +69,7 @@ class TestListProjects:
 
     def test_list_projects_with_search(self, client: TestClient, db_session: Session) -> None:
         """List projects with search filter."""
-        project1 = Project(name="Machine Learning Project", description="ML project")
+        project1 = Project(name="Analytics Project", description="Analytics project")
         project2 = Project(name="Data Analysis Project", description="Analysis project")
         db_session.add_all([project1, project2])
         db_session.commit()
@@ -79,7 +79,7 @@ class TestListProjects:
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert len(data["data"]) == 1
-        assert data["data"][0]["name"] == "Machine Learning Project"
+        assert data["data"][0]["name"] == "Analytics Project"
 
     def test_list_projects_with_sorting(self, client: TestClient, db_session: Session) -> None:
         """List projects with sorting."""

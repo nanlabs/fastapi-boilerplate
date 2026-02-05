@@ -2,9 +2,8 @@
 Project database model.
 
 This module defines the Project database model using SQLAlchemy ORM.
-Projects serve as the top-level organizational unit in the MLOps system,
-containing multiple experiments and providing context for machine learning
-workflows.
+Projects serve as the top-level organizational unit for workflow execution,
+containing multiple experiments and providing context for analysis tasks.
 """
 
 from __future__ import annotations

@@ -7,12 +7,14 @@ This FastAPI boilerplate was created from the Thorcast project, removing all Mac
 ## ✅ Completed
 
 ### 1. Package Manager: pdm → uv
+
 - ✅ All commands use `uv run` or `uv sync`
 - ✅ Removed pdm references in Makefile
 - ✅ DevContainer configured with uv
 - ✅ pyproject.toml uses uv dependency-groups
 
 **💡 Benefits of uv:**
+
 - ⚡ **10-100x faster** than pip/pdm
 - 🚀 **CI/CD Savings**: ~8 minutes per build (pdm: ~10 min → uv: ~2 min)
 - 📦 Dependency installation in **seconds** instead of minutes
@@ -20,17 +22,20 @@ This FastAPI boilerplate was created from the Thorcast project, removing all Mac
 - 💾 Smart cache that speeds up reinstallations
 
 ### 2. Clean Dependencies
+
 - ✅ Removed: pandas, polars, pyyaml, numpy, scikit-learn, xgboost, ydata-profiling
 - ✅ Only groups: `dependencies` and `dev`
 - ✅ Removed groups: `ml`, `build`, `docs`
 
 ### 3. Quality Tools: Ruff
+
 - ✅ Ruff replaces: black, isort, flake8, pylint
 - ✅ MyPy configured in strict mode
 - ✅ Removed pyright (redundant)
 - ✅ Consolidated configuration in pyproject.toml
 
 ### 4. Simplified Makefile
+
 - ✅ Commands with `uv run`
 - ✅ `install-dev` = `uv sync`
 - ✅ Removed targets: install-ml, jupyter, test-model, profile-data, build
@@ -38,6 +43,7 @@ This FastAPI boilerplate was created from the Thorcast project, removing all Mac
 - ✅ `autofix` uses `ruff check --fix`
 
 ### 5. Modern DevContainer
+
 - ✅ Base: Python 3.13
 - ✅ uv installed from official image
 - ✅ postCreateCommand: `make install-dev && make init-db`
@@ -45,6 +51,7 @@ This FastAPI boilerplate was created from the Thorcast project, removing all Mac
 - ✅ Type checking mode: strict
 
 ### 6. Clean Structure
+
 - ✅ Removed `app/ml/` folder
 - ✅ Removed ML/profiling schemas
 - ✅ Simplified scripts (only init_db.py and devserver.py)
