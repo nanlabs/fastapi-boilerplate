@@ -2,12 +2,10 @@
 Experiment database model.
 
 This module defines the Experiment database model using SQLAlchemy ORM.
-Experiments represent individual workflow executions within
-a project, categorized by type such as classification, regression, or
-custom analysis categories.
+Experiments represent individual workflow executions within a project.
 
-The Experiment model tracks experiment metadata including name, type,
-description, and automatic timestamps. Each experiment belongs to a single
+The Experiment model tracks experiment metadata including name,
+description, status, and automatic timestamps. Each experiment belongs to a single
 project through a foreign key relationship, enabling project-based
 organization and management of experiments.
 """
@@ -25,8 +23,6 @@ from app.schemas.common.base import ExperimentStatus
 
 if TYPE_CHECKING:
     from app.db.models.dataset_file import DatasetFile
-    from app.db.models.experiment_type import ExperimentType
-    from app.db.models.model_type import ModelType
     from app.db.models.project import Project
 
 
@@ -61,18 +57,6 @@ class Experiment(Base):
         index=True,
     )
 
-    experiment_type_id: Mapped[int | None] = mapped_column(
-        Integer,
-        ForeignKey("experiment_types.id", ondelete="SET NULL"),
-        nullable=True,
-        index=True,
-    )
-    model_type_id: Mapped[int | None] = mapped_column(
-        Integer,
-        ForeignKey("model_types.id", ondelete="SET NULL"),
-        nullable=True,
-        index=True,
-    )
     dataset_file_id: Mapped[int | None] = mapped_column(
         Integer,
         ForeignKey("dataset_files.id", ondelete="SET NULL"),
@@ -82,14 +66,6 @@ class Experiment(Base):
 
     # Relationships
     project: Mapped[Project] = relationship("Project", back_populates="experiments")
-    experiment_type: Mapped[ExperimentType | None] = relationship(
-        "ExperimentType",
-        back_populates="experiments",
-    )
-    model_type: Mapped[ModelType | None] = relationship(
-        "ModelType",
-        back_populates="experiments",
-    )
     dataset_file: Mapped[DatasetFile | None] = relationship("DatasetFile")
 
     @property

@@ -11,7 +11,6 @@ class ExperimentBase(BaseModel):
     """Schema for experiment base."""
 
     name: str = Field(..., description="Experiment name", min_length=1, max_length=255)
-    experiment_type_id: int | None = Field(None, description="Experiment type ID")
     description: str | None = Field(None, description="Experiment description", max_length=1000)
     project_id: int = Field(..., description="Project ID")
 
@@ -24,7 +23,6 @@ class ExperimentCreate(ExperimentBase):
         json_schema_extra={
             "example": {
                 "name": "Baseline Analysis Run",
-                "experiment_type_id": 1,
                 "description": "Initial run to establish baseline performance metrics",
                 "project_id": 1,
             }
@@ -40,7 +38,6 @@ class ExperimentUpdate(BaseModel):
     name: str | None = Field(
         default=None, description="Experiment name", min_length=1, max_length=255
     )
-    experiment_type_id: int | None = Field(default=None, description="Experiment type ID")
     description: str | None = Field(
         default=None, description="Experiment description", max_length=1000
     )
@@ -124,7 +121,6 @@ class ExperimentResponse(ExperimentBase):
             "example": {
                 "id": 1,
                 "name": "Baseline Analysis Run",
-                "experiment_type_id": 1,
                 "description": "Initial run to establish baseline performance metrics",
                 "project_id": 1,
                 "status": "draft",

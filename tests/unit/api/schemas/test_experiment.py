@@ -23,22 +23,19 @@ class TestExperimentBase:
         data = ExperimentBase(
             name="Test Experiment",
             project_id=1,
-            experiment_type_id=1,
             description="Test description",
         )
         assert data.name == "Test Experiment"
         assert data.project_id == 1
-        assert data.experiment_type_id == 1
         assert data.description == "Test description"
 
     def test_experiment_base_minimal(self) -> None:
         """Create ExperimentBase with minimal required fields."""
         data = ExperimentBase(
-            name="Test", project_id=1, experiment_type_id=1, description="Test description"
+            name="Test", project_id=1, description="Test description"
         )
         assert data.name == "Test"
         assert data.project_id == 1
-        assert data.experiment_type_id == 1
         assert data.description == "Test description"
 
 
@@ -50,7 +47,6 @@ class TestExperimentCreate:
         data = ExperimentCreate(
             name="Test Experiment",
             project_id=1,
-            experiment_type_id=1,
             description="Test description",
         )
         assert data.name == "Test Experiment"
@@ -60,14 +56,14 @@ class TestExperimentCreate:
         """Raise error when name is too short."""
         with pytest.raises(ValidationError):
             ExperimentCreate(
-                name="", project_id=1, experiment_type_id=1, description="Test description"
+                name="", project_id=1, description="Test description"
             )
 
     def test_experiment_create_name_too_long(self) -> None:
         """Raise error when name is too long."""
         with pytest.raises(ValidationError):
             ExperimentCreate(
-                name="x" * 256, project_id=1, experiment_type_id=1, description="Test description"
+                name="x" * 256, project_id=1, description="Test description"
             )
 
 
@@ -79,12 +75,10 @@ class TestExperimentUpdate:
         data = ExperimentUpdate(
             name="Updated Name",
             project_id=2,
-            experiment_type_id=2,
             description="Updated description",
         )
         assert data.name == "Updated Name"
         assert data.project_id == 2
-        assert data.experiment_type_id == 2
         assert data.description == "Updated description"
 
     def test_experiment_update_partial(self) -> None:
@@ -92,7 +86,6 @@ class TestExperimentUpdate:
         data = ExperimentUpdate(name="Updated Name")
         assert data.name == "Updated Name"
         assert data.project_id is None
-        assert data.experiment_type_id is None
         assert data.description is None
 
     def test_experiment_update_empty(self) -> None:
@@ -166,7 +159,6 @@ class TestExperimentResponse:
             id=1,
             name="Test Experiment",
             project_id=1,
-            experiment_type_id=1,
             description="Test description",
             status=ExperimentStatus.DRAFT,
             current_step=0,

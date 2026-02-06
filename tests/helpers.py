@@ -4,15 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.db.models.dataset_file import DatasetFile
 from app.db.models.experiment import Experiment
-from app.db.models.experiment_type import ExperimentType
 from app.db.models.project import Project
-
-
-def create_experiment_type(
-    name: str = "Classification",
-) -> ExperimentType:
-    """Create an ExperimentType instance for testing with default values."""
-    return ExperimentType(name=name)
 
 
 def create_project_with_dataset_and_experiment(

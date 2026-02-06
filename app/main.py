@@ -10,10 +10,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.endpoints import (
     dataset_files,
-    experiment_types,
     experiments,
     health,
-    model_types,
     projects,
 )
 from app.core.config import settings
@@ -62,8 +60,6 @@ app.add_middleware(
 # Include routers (versioned)
 app.include_router(health.router, prefix=settings.api_prefix)
 app.include_router(projects.router, prefix=f"{settings.api_prefix}/projects")
-app.include_router(model_types.router, prefix=f"{settings.api_prefix}/model-types")
-app.include_router(experiment_types.router, prefix=f"{settings.api_prefix}/experiment-types")
 app.include_router(experiments.router, prefix=f"{settings.api_prefix}/experiments")
 app.include_router(dataset_files.router, prefix=f"{settings.api_prefix}/dataset-files")
 
@@ -72,8 +68,6 @@ legacy_api_prefix = "/api"
 if legacy_api_prefix != settings.api_prefix:
     app.include_router(health.router, prefix=legacy_api_prefix)
     app.include_router(projects.router, prefix=f"{legacy_api_prefix}/projects")
-    app.include_router(model_types.router, prefix=f"{legacy_api_prefix}/model-types")
-    app.include_router(experiment_types.router, prefix=f"{legacy_api_prefix}/experiment-types")
     app.include_router(experiments.router, prefix=f"{legacy_api_prefix}/experiments")
     app.include_router(dataset_files.router, prefix=f"{legacy_api_prefix}/dataset-files")
 
