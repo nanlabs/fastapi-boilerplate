@@ -88,15 +88,3 @@ class ExperimentStatus(str, Enum):
     COMPLETED = "completed"
     PUBLISHED = "published"
     FAILED = "failed"
-
-
-class ModelTypeStatus(str, Enum):
-    """Status of a model type.
-
-    Represents the availability and access control status of model types
-    in the system. Determines how users can access different model categories.
-    """
-
-    AVAILABLE = "available"
-    REQUEST_ACCESS = "request_access"
-    COMING_SOON = "coming_soon"

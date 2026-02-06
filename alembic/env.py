@@ -9,7 +9,7 @@ from alembic import context
 from app.core.config import settings
 
 # Import all models so Alembic can detect them
-from app.db.models import DatasetFile, Experiment, ExperimentType, ModelType, Project  # noqa: F401
+from app.db.models import DatasetFile, Experiment, Project  # noqa: F401
 from app.db.models.base import Base
 
 # this is the Alembic Config object, which provides

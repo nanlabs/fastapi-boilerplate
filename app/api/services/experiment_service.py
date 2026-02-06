@@ -19,7 +19,6 @@ from app.api.schemas.experiment import (
 from app.api.services.dataset_file_service import DatasetFileService
 from app.api.services.utils import apply_sorting, build_list_response
 from app.db.models.experiment import Experiment
-from app.db.models.experiment_type import ExperimentType
 from app.db.models.project import Project
 from app.schemas.common.base import ExperimentStatus
 
@@ -37,20 +36,8 @@ class ExperimentService:
         if not project:
             raise NotFoundError(f"Project with ID {experiment_data.project_id} not found")
 
-        # Validate experiment type exists
-        experiment_type = (
-            self.db.query(ExperimentType)
-            .filter(ExperimentType.id == experiment_data.experiment_type_id)
-            .first()
-        )
-        if not experiment_type:
-            raise NotFoundError(
-                f"Experiment type with ID {experiment_data.experiment_type_id} not found"
-            )
-
         db_experiment = Experiment(
             name=experiment_data.name,
-            experiment_type_id=experiment_data.experiment_type_id,
             description=experiment_data.description,
             project_id=experiment_data.project_id,
         )
@@ -75,7 +62,6 @@ class ExperimentService:
         sorting: SortingParams,
         search_params: SearchParams,
         project_id: int | None = None,
-        experiment_type_id: int | None = None,
     ) -> ListResponse[ExperimentResponse]:
         """List all experiments with optional filters, pagination, sorting, and search."""
         query = self.db.query(Experiment)
@@ -83,8 +69,6 @@ class ExperimentService:
         # Apply filters
         if project_id is not None:
             query = query.filter(Experiment.project_id == project_id)
-        if experiment_type_id is not None:
-            query = query.filter(Experiment.experiment_type_id == experiment_type_id)
 
         # Apply search filter
         if search_params.search:
@@ -127,22 +111,9 @@ class ExperimentService:
             if not project:
                 raise NotFoundError(f"Project with ID {experiment_update.project_id} not found")
 
-        if experiment_update.experiment_type_id is not None:
-            experiment_type = (
-                self.db.query(ExperimentType)
-                .filter(ExperimentType.id == experiment_update.experiment_type_id)
-                .first()
-            )
-            if not experiment_type:
-                raise NotFoundError(
-                    f"Experiment type with ID {experiment_update.experiment_type_id} not found"
-                )
-
         # Update fields
         if experiment_update.name is not None:
             experiment.name = experiment_update.name
-        if experiment_update.experiment_type_id is not None:
-            experiment.experiment_type_id = experiment_update.experiment_type_id
         if experiment_update.description is not None:
             experiment.description = experiment_update.description
         if experiment_update.project_id is not None:
@@ -213,7 +184,6 @@ class ExperimentService:
         return ExperimentResponse(
             id=experiment.id,
             name=experiment.name,
-            experiment_type_id=experiment.experiment_type_id,
             description=experiment.description,
             project_id=experiment.project_id,
             status=ExperimentStatus(experiment.status),

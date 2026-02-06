@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-This FastAPI boilerplate was created from the Thorcast project, removing all Machine Learning complexity and simplifying development tools.
+This FastAPI boilerplate was created from an internal project, removing domain-specific complexity and simplifying development tools.
 
 ## ✅ Completed
 
@@ -25,25 +25,22 @@ This FastAPI boilerplate was created from the Thorcast project, removing all Mac
 
 - ✅ Removed: pandas, polars, pyyaml, numpy, scikit-learn, xgboost, ydata-profiling
 - ✅ Only groups: `dependencies` and `dev`
-- ✅ Removed groups: `ml`, `build`, `docs`
+- ✅ Removed groups: `build`, `docs`
 
 ### 3. Quality Tools: Ruff
-
 - ✅ Ruff replaces: black, isort, flake8, pylint
 - ✅ MyPy configured in strict mode
 - ✅ Removed pyright (redundant)
 - ✅ Consolidated configuration in pyproject.toml
 
 ### 4. Simplified Makefile
-
 - ✅ Commands with `uv run`
 - ✅ `install-dev` = `uv sync`
-- ✅ Removed targets: install-ml, jupyter, test-model, profile-data, build
+- ✅ Removed targets: jupyter, test-model, profile-data, build
 - ✅ `format` uses `ruff format`
 - ✅ `autofix` uses `ruff check --fix`
 
 ### 5. Modern DevContainer
-
 - ✅ Base: Python 3.13
 - ✅ uv installed from official image
 - ✅ postCreateCommand: `make install-dev && make init-db`
@@ -51,11 +48,10 @@ This FastAPI boilerplate was created from the Thorcast project, removing all Mac
 - ✅ Type checking mode: strict
 
 ### 6. Clean Structure
-
 - ✅ Removed `app/ml/` folder
-- ✅ Removed ML/profiling schemas
+- ✅ Removed profiling schemas
 - ✅ Simplified scripts (only init_db.py and devserver.py)
-- ✅ Tests without ML dependencies
+- ✅ Tests without domain-specific dependencies
 
 ## New Files Created
 
@@ -70,12 +66,12 @@ This FastAPI boilerplate was created from the Thorcast project, removing all Mac
 9. **LICENSE** - MIT License
 10. **REFACTORING.md** - This document
 
-## Structure Copied from Thorcast
+## Structure Copied from the Source Project
 
 - ✅ `app/` (without ml/)
 - ✅ `alembic/` and `alembic.ini`
 - ✅ `scripts/` (only init_db.py and devserver.py)
-- ✅ `tests/` (without ML tests)
+- ✅ `tests/` (without domain-specific tests)
 - ✅ `config/`
 
 ## How to Test the Boilerplate
@@ -102,19 +98,19 @@ make test
 make all-checks
 ```
 
-## Advantages vs Original Thorcast
+## Advantages vs Original Source Project
 
-| Aspect | Thorcast (Before) | Boilerplate (Now) |
+| Aspect | Source Project (Before) | Boilerplate (Now) |
 |---------|------------------|-------------------|
 | Package manager | pdm | uv (faster) |
 | Linter | flake8 + pylint | Ruff (10-100x faster) |
 | Formatter | black + isort | Ruff (all-in-one) |
 | Dependencies | 50+ packages | ~15 packages |
-| Dep groups | 4 (prod, dev, ml, build) | 2 (prod, dev) |
+| Dep groups | 4 (prod, dev, build, docs) | 2 (prod, dev) |
 | Makefile targets | 30+ | 20 (essentials) |
 | Install time | ~5-10 min | ~1-2 min |
 | **CI/CD time** | **~10 min** | **~2 min (8 min saved)** |
-| Complexity | ML + API | Simple API |
+| Complexity | Domain-specific + API | Simple API |
 
 ## Suggested Next Steps
 
@@ -139,7 +135,7 @@ make all-checks
 
 ## Important Notes
 
-- ⚠️ Do not commit to project-thorcast-mlops-api
+- ⚠️ Do not commit to the source project
 - ✅ All work was done in fastapi-boilerplate
 - 🎯 The boilerplate is completely independent
 - 📦 Ready to be used as a template in new projects
