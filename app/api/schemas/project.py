@@ -53,7 +53,6 @@ class ProjectResponse(ProjectBase):
     id: int = Field(..., description="Project ID")
     created_at: datetime.datetime = Field(..., description="Creation timestamp")
     updated_at: datetime.datetime = Field(..., description="Last update timestamp")
-    experiments_count: int = Field(default=0, description="Number of experiments")
 
     # pylint: disable=duplicate-code
     model_config = ConfigDict(
@@ -65,7 +64,6 @@ class ProjectResponse(ProjectBase):
                 "description": "Analytics project focused on customer behavior trends",
                 "created_at": "2025-01-20T10:30:00.000000",
                 "updated_at": "2025-01-20T10:30:00.000000",
-                "experiments_count": 5,
             }
         },
     )

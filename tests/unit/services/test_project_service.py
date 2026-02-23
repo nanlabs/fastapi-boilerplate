@@ -7,14 +7,12 @@ from app.api.exceptions import ConflictError, NotFoundError, SortingValidationEr
 from app.api.schemas.api import PaginationParams, SearchParams, SortDirection, SortingParams
 from app.api.schemas.project import ProjectCreate, ProjectUpdate
 from app.api.services.project_service import ProjectService
-from app.db.models.experiment import Experiment
 from app.db.models.project import Project
 
 
 @pytest.fixture(autouse=True)
 def _cleanup_projects(db_session: Session) -> None:
-    """Clean up projects and experiments before each test."""
-    db_session.query(Experiment).delete()
+    """Clean up projects before each test."""
     db_session.query(Project).delete()
     db_session.commit()
 
@@ -74,7 +72,7 @@ class TestListProjects:
         service = ProjectService(db_session)
         pagination = PaginationParams(skip=0, limit=10)
         sorting = SortingParams(sort_by=None, sort_direction=SortDirection.ASC)
-        search_params = SearchParams(search="Machine")
+        search_params = SearchParams(search="Analytics")
 
         result = service.list_projects(pagination, sorting, search_params)
 
@@ -91,7 +89,7 @@ class TestListProjects:
         service = ProjectService(db_session)
         pagination = PaginationParams(skip=0, limit=10)
         sorting = SortingParams(sort_by=None, sort_direction=SortDirection.ASC)
-        search_params = SearchParams(search="Learning")
+        search_params = SearchParams(search="Analytics")
 
         result = service.list_projects(pagination, sorting, search_params)
 
@@ -192,7 +190,6 @@ class TestCreateProject:
         assert result.name == "New Project"
         assert result.description == "New description"
         assert result.id is not None
-        assert result.experiments_count == 0
 
         # Verify in database
         db_project = db_session.query(Project).filter(Project.id == result.id).first()

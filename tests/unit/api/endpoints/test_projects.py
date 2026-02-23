@@ -13,15 +13,13 @@ from sqlalchemy.orm import Session
 from app.api.exceptions import SortingValidationError
 from app.api.services.dependencies import get_project_service
 from app.api.services.project_service import ProjectService
-from app.db.models.experiment import Experiment
 from app.db.models.project import Project
 from app.main import app
 
 
 @pytest.fixture(autouse=True)
 def _cleanup_projects(db_session: Session) -> None:
-    """Clean up projects and experiments before each test."""
-    db_session.query(Experiment).delete()
+    """Clean up projects before each test."""
     db_session.query(Project).delete()
     db_session.commit()
 
@@ -74,7 +72,7 @@ class TestListProjects:
         db_session.add_all([project1, project2])
         db_session.commit()
 
-        response = client.get("/api/projects?search=Machine")
+        response = client.get("/api/projects?search=Analytics")
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()

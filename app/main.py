@@ -9,8 +9,6 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.endpoints import (
-    dataset_files,
-    experiments,
     health,
     projects,
 )
@@ -60,16 +58,12 @@ app.add_middleware(
 # Include routers (versioned)
 app.include_router(health.router, prefix=settings.api_prefix)
 app.include_router(projects.router, prefix=f"{settings.api_prefix}/projects")
-app.include_router(experiments.router, prefix=f"{settings.api_prefix}/experiments")
-app.include_router(dataset_files.router, prefix=f"{settings.api_prefix}/dataset-files")
 
 # Legacy (unversioned) routes for backward compatibility
 legacy_api_prefix = "/api"
 if legacy_api_prefix != settings.api_prefix:
     app.include_router(health.router, prefix=legacy_api_prefix)
     app.include_router(projects.router, prefix=f"{legacy_api_prefix}/projects")
-    app.include_router(experiments.router, prefix=f"{legacy_api_prefix}/experiments")
-    app.include_router(dataset_files.router, prefix=f"{legacy_api_prefix}/dataset-files")
 
 
 @app.get("/", tags=["root"])

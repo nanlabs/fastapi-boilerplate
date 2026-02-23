@@ -111,5 +111,4 @@ class ProjectService:
             description=project.description,
             created_at=project.created_at,
             updated_at=project.updated_at,
-            experiments_count=len(project.experiments),
         )
