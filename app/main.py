@@ -59,12 +59,6 @@ app.add_middleware(
 app.include_router(health.router, prefix=settings.api_prefix)
 app.include_router(projects.router, prefix=f"{settings.api_prefix}/projects")
 
-# Legacy (unversioned) routes for backward compatibility
-legacy_api_prefix = "/api"
-if legacy_api_prefix != settings.api_prefix:
-    app.include_router(health.router, prefix=legacy_api_prefix)
-    app.include_router(projects.router, prefix=f"{legacy_api_prefix}/projects")
-
 
 @app.get("/", tags=["root"])
 async def root() -> dict[str, str]:

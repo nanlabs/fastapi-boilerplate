@@ -33,7 +33,7 @@ class TestListProjects:
         db_session.add(project)
         db_session.commit()
 
-        response = client.get("/api/projects")
+        response = client.get("/api/v1/projects")
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -46,7 +46,7 @@ class TestListProjects:
 
     def test_list_projects_empty(self, client: TestClient) -> None:
         """List projects when database is empty."""
-        response = client.get("/api/projects")
+        response = client.get("/api/v1/projects")
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -59,7 +59,7 @@ class TestListProjects:
             db_session.add(project)
         db_session.commit()
 
-        response = client.get("/api/projects?skip=2&limit=2")
+        response = client.get("/api/v1/projects?skip=2&limit=2")
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -72,7 +72,7 @@ class TestListProjects:
         db_session.add_all([project1, project2])
         db_session.commit()
 
-        response = client.get("/api/projects?search=Analytics")
+        response = client.get("/api/v1/projects?search=Analytics")
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -86,7 +86,7 @@ class TestListProjects:
         db_session.add_all([project1, project2])
         db_session.commit()
 
-        response = client.get("/api/projects?sort_by=name&sort_direction=asc")
+        response = client.get("/api/v1/projects?sort_by=name&sort_direction=asc")
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -108,7 +108,7 @@ class TestListProjects:
         app.dependency_overrides[get_project_service] = override_get_project_service
 
         try:
-            response = client.get("/api/projects?sort_by=invalid_field")
+            response = client.get("/api/v1/projects?sort_by=invalid_field")
 
             assert response.status_code == status.HTTP_400_BAD_REQUEST
             data = response.json()
@@ -131,7 +131,7 @@ class TestListProjects:
         app.dependency_overrides[get_project_service] = override_get_project_service
 
         try:
-            response = client.get("/api/projects")
+            response = client.get("/api/v1/projects")
 
             assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
             data = response.json()
@@ -152,7 +152,7 @@ class TestListProjects:
         app.dependency_overrides[get_project_service] = override_get_project_service
 
         try:
-            response = client.get("/api/projects")
+            response = client.get("/api/v1/projects")
 
             assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
             data = response.json()
@@ -169,7 +169,7 @@ class TestCreateProject:
         """Create project successfully."""
         project_data = {"name": "Test Project", "description": "Test description"}
 
-        response = client.post("/api/projects", json=project_data)
+        response = client.post("/api/v1/projects", json=project_data)
 
         assert response.status_code == status.HTTP_201_CREATED
         data = response.json()
@@ -181,7 +181,7 @@ class TestCreateProject:
         """Create project without description."""
         project_data = {"name": "Test Project", "description": None}
 
-        response = client.post("/api/projects", json=project_data)
+        response = client.post("/api/v1/projects", json=project_data)
 
         assert response.status_code == status.HTTP_201_CREATED
         data = response.json()
@@ -196,7 +196,7 @@ class TestCreateProject:
 
         project_data = {"name": "Existing Project", "description": "New description"}
 
-        response = client.post("/api/projects", json=project_data)
+        response = client.post("/api/v1/projects", json=project_data)
 
         assert response.status_code == status.HTTP_409_CONFLICT
         data = response.json()
@@ -219,7 +219,7 @@ class TestCreateProject:
         try:
             project_data = {"name": "Test Project", "description": "Test description"}
 
-            response = client.post("/api/projects", json=project_data)
+            response = client.post("/api/v1/projects", json=project_data)
 
             assert response.status_code == status.HTTP_409_CONFLICT
             data = response.json()
@@ -244,7 +244,7 @@ class TestCreateProject:
         try:
             project_data = {"name": "Test Project", "description": "Test description"}
 
-            response = client.post("/api/projects", json=project_data)
+            response = client.post("/api/v1/projects", json=project_data)
 
             assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
             data = response.json()
@@ -267,7 +267,7 @@ class TestCreateProject:
         try:
             project_data = {"name": "Test Project", "description": "Test description"}
 
-            response = client.post("/api/projects", json=project_data)
+            response = client.post("/api/v1/projects", json=project_data)
 
             assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
             data = response.json()
@@ -287,7 +287,7 @@ class TestGetProject:
         db_session.commit()
         project_id = project.id
 
-        response = client.get(f"/api/projects/{project_id}")
+        response = client.get(f"/api/v1/projects/{project_id}")
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -297,7 +297,7 @@ class TestGetProject:
 
     def test_get_project_not_found(self, client: TestClient) -> None:
         """Raise 404 error when project not found."""
-        response = client.get("/api/projects/999")
+        response = client.get("/api/v1/projects/999")
 
         assert response.status_code == status.HTTP_404_NOT_FOUND
         data = response.json()
@@ -318,7 +318,7 @@ class TestGetProject:
         app.dependency_overrides[get_project_service] = override_get_project_service
 
         try:
-            response = client.get("/api/projects/1")
+            response = client.get("/api/v1/projects/1")
 
             assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
             data = response.json()
@@ -339,7 +339,7 @@ class TestGetProject:
         app.dependency_overrides[get_project_service] = override_get_project_service
 
         try:
-            response = client.get("/api/projects/1")
+            response = client.get("/api/v1/projects/1")
 
             assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
             data = response.json()
@@ -361,7 +361,7 @@ class TestUpdateProject:
 
         project_update = {"name": "New Name", "description": "New description"}
 
-        response = client.patch(f"/api/projects/{project_id}", json=project_update)
+        response = client.patch(f"/api/v1/projects/{project_id}", json=project_update)
 
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
@@ -372,7 +372,7 @@ class TestUpdateProject:
         """Raise 404 error when project not found."""
         project_update = {"name": "New Name"}
 
-        response = client.patch("/api/projects/999", json=project_update)
+        response = client.patch("/api/v1/projects/999", json=project_update)
 
         assert response.status_code == status.HTTP_404_NOT_FOUND
         data = response.json()
@@ -388,7 +388,7 @@ class TestUpdateProject:
 
         project_update = {"name": "Project 2"}
 
-        response = client.patch(f"/api/projects/{project1.id}", json=project_update)
+        response = client.patch(f"/api/v1/projects/{project1.id}", json=project_update)
 
         assert response.status_code == status.HTTP_409_CONFLICT
         data = response.json()
@@ -411,7 +411,7 @@ class TestUpdateProject:
         try:
             project_update = {"name": "New Name"}
 
-            response = client.patch("/api/projects/1", json=project_update)
+            response = client.patch("/api/v1/projects/1", json=project_update)
 
             assert response.status_code == status.HTTP_409_CONFLICT
             data = response.json()
@@ -436,7 +436,7 @@ class TestUpdateProject:
         try:
             project_update = {"name": "New Name"}
 
-            response = client.patch("/api/projects/1", json=project_update)
+            response = client.patch("/api/v1/projects/1", json=project_update)
 
             assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
             data = response.json()
@@ -459,7 +459,7 @@ class TestUpdateProject:
         try:
             project_update = {"name": "New Name"}
 
-            response = client.patch("/api/projects/1", json=project_update)
+            response = client.patch("/api/v1/projects/1", json=project_update)
 
             assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
             data = response.json()
@@ -479,7 +479,7 @@ class TestDeleteProject:
         db_session.commit()
         project_id = project.id
 
-        response = client.delete(f"/api/projects/{project_id}")
+        response = client.delete(f"/api/v1/projects/{project_id}")
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
         # Verify deleted
@@ -488,7 +488,7 @@ class TestDeleteProject:
 
     def test_delete_project_not_found(self, client: TestClient) -> None:
         """Raise 404 error when project not found."""
-        response = client.delete("/api/projects/999")
+        response = client.delete("/api/v1/projects/999")
 
         assert response.status_code == status.HTTP_404_NOT_FOUND
         data = response.json()
@@ -509,7 +509,7 @@ class TestDeleteProject:
         app.dependency_overrides[get_project_service] = override_get_project_service
 
         try:
-            response = client.delete("/api/projects/1")
+            response = client.delete("/api/v1/projects/1")
 
             assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
             data = response.json()

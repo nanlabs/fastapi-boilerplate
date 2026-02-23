@@ -32,7 +32,7 @@ The API uses URL versioning:
 
 ### Health Check
 
-#### `GET /health`
+#### `GET /api/v1/healthz`
 
 Checks the API status.
 
@@ -41,8 +41,8 @@ Checks the API status.
 ```json
 {
   "status": "healthy",
-  "version": "0.1.0",
-  "timestamp": "2026-01-30T10:00:00Z"
+  "timestamp": "2026-01-30T10:00:00Z",
+  "service": "fastapi-boilerplate"
 }
 ```
 
@@ -346,7 +346,7 @@ async def websocket_endpoint(websocket: WebSocket):
 
 ```bash
 # Health check
-curl http://localhost:8000/health
+curl http://localhost:8000/api/v1/healthz
 
 # List projects
 curl http://localhost:8000/api/v1/projects
@@ -429,7 +429,7 @@ You can use this to automatically generate clients with tools like:
 ### Health Check
 
 ```
-GET /health
+GET /api/v1/healthz
 ```
 
 Returns the API status and its dependencies.
