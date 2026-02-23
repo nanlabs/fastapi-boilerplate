@@ -42,21 +42,8 @@ class ExperimentUpdate(BaseModel):
         default=None, description="Experiment description", max_length=1000
     )
     project_id: int | None = Field(default=None, description="Project ID")
-
-    # pylint: disable=duplicate-code
-    model_config = ConfigDict(
-        json_schema_extra={
-            "example": {
-                "name": "Baseline Analysis Run - Updated",
-                "description": (
-                    "Updated run with additional features and improved parameters"
-                ),
-                "project_id": 1,
-            }
-        }
-    )
-
-    # pylint: enable=duplicate-code
+    status: ExperimentStatus | None = Field(default=None, description="Experiment status")
+    current_step: int | None = Field(default=None, description="Current step", ge=0)
 
 
 class ExperimentAttachDataset(BaseModel):

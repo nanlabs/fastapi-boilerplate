@@ -81,9 +81,7 @@ def list_experiments(  # pylint: disable=too-many-arguments, too-many-positional
 ) -> ListResponse[ExperimentResponse]:
     """List experiments for a project with optional filters, pagination, sorting, and search."""
     try:
-        return service.list_experiments(
-            pagination, sorting, search_params, project_id, experiment_type_id
-        )
+        return service.list_experiments(pagination, sorting, search_params, project_id)
     except SortingValidationError as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=exc.message) from exc
     # pylint: disable=duplicate-code

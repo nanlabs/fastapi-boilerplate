@@ -111,13 +111,30 @@ class ExperimentService:
             if not project:
                 raise NotFoundError(f"Project with ID {experiment_update.project_id} not found")
 
-        # Update fields
+        # --- CAMPOS EXISTENTES ---
         if experiment_update.name is not None:
             experiment.name = experiment_update.name
         if experiment_update.description is not None:
             experiment.description = experiment_update.description
         if experiment_update.project_id is not None:
             experiment.project_id = experiment_update.project_id
+
+        # --- AGREGAR ESTOS CAMPOS FALTANTES ---
+        if experiment_update.status is not None:
+            # Asegurate de guardar el .value si recibís un Enum
+            experiment.status = (
+                experiment_update.status.value
+                if hasattr(experiment_update.status, "value")
+                else experiment_update.status
+            )
+        if experiment_update.current_step is not None:
+            experiment.current_step = experiment_update.current_step
+
+        if (
+            hasattr(experiment_update, "dataset_file_id")
+            and experiment_update.dataset_file_id is not None
+        ):
+            experiment.dataset_file_id = experiment_update.dataset_file_id
 
         self.db.commit()
         self.db.refresh(experiment)

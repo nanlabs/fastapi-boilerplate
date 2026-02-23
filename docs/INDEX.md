@@ -4,15 +4,19 @@ Welcome to the FastAPI Boilerplate documentation. This folder contains all the i
 
 ## 📖 Contents
 
-### [🚀 Getting Started](./getting-started.md)
+### [🚀 Getting Started](./GETTING_STARTED.md)
+
 **Quick start guide to begin using the boilerplate**
-- Installation and initial setup
-- First steps with Dev Container
+
+- Installation and initial setup (Dev Container required)
+- First steps with VS Code/Cursor or Dev Container CLI
 - Essential commands
 - First developments
 
-### [💻 Development Guide](./development.md)
+### [💻 Development Guide](./DEVELOPMENT.md)
+
 **Complete development guide**
+
 - Project structure
 - Creating endpoints
 - Testing
@@ -20,16 +24,20 @@ Welcome to the FastAPI Boilerplate documentation. This folder contains all the i
 - Pre-commit hooks
 - Troubleshooting
 
-### [🏗️ Architecture](./architecture.md)
+### [🏗️ Architecture](./ARCHITECTURE.md)
+
 **Architecture and technical decisions**
+
 - Design decisions
 - Comparison with the source project
 - Technologies used
 - Migration from pdm to uv
 - Consolidation with Ruff
 
-### [📝 API Documentation](./api.md)
+### [📝 API Documentation](./API.md)
+
 **API documentation**
+
 - Available endpoints
 - Data models
 - Usage examples
@@ -43,10 +51,10 @@ Welcome to the FastAPI Boilerplate documentation. This folder contains all the i
 
 ## 🎯 Where to Start
 
-1. **New user**: Read [Getting Started](./getting-started.md)
-2. **Developing features**: Check [Development Guide](./development.md)
-3. **Understanding architecture**: Review [Architecture](./architecture.md)
-4. **Using the API**: See [API Documentation](./api.md)
+1. **New user**: Read [Getting Started](./GETTING_STARTED.md)
+2. **Developing features**: Check [Development Guide](./DEVELOPMENT.md)
+3. **Understanding architecture**: Review [Architecture](./ARCHITECTURE.md)
+4. **Using the API**: See [API Documentation](./API.md)
 
 ## 📚 External Resources
 

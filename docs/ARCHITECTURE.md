@@ -46,6 +46,7 @@ This FastAPI boilerplate was created from an internal project, removing domain-s
 - ✅ postCreateCommand: `make install-dev && make init-db`
 - ✅ Ruff extension as default formatter
 - ✅ Type checking mode: strict
+- ✅ Development workflow standardized: Dev Container is mandatory
 
 ### 6. Clean Structure
 - ✅ Removed `app/ml/` folder
@@ -77,11 +78,9 @@ This FastAPI boilerplate was created from an internal project, removing domain-s
 ## How to Test the Boilerplate
 
 ```bash
-# 1. Open in VS Code
-code fastapi-boilerplate
-
-# 2. Reopen in Container
-# (VS Code will suggest it automatically)
+# 1. Start Dev Container
+# Option A (editor): open the project in VS Code/Cursor and click "Reopen in Container"
+# Option B (CLI): devcontainer up --workspace-folder .
 
 # 3. Wait for postCreateCommand to finish
 

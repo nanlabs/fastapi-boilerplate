@@ -13,17 +13,18 @@ A production-ready FastAPI boilerplate with:
 - ✅ Pre-configured Dev Container
 - ✅ uv package manager (ultra-fast)
 
-## 3-Step Setup
+## 3-Step Setup (Dev Container Required)
 
-### 1️⃣ Open in VS Code
+### 1️⃣ Choose your entry path
 
-```bash
-code fastapi-boilerplate
-```
+Use one of these options:
 
-### 2️⃣ Reopen in Container
+- **Editor (VS Code or Cursor):** open the project and click **"Reopen in Container"**
+- **CLI:** run `devcontainer up --workspace-folder .`
 
-When VS Code prompts you, click **"Reopen in Container"**
+### 2️⃣ Start inside the container
+
+After the container is running, open the workspace in your editor and use the integrated terminal.
 
 The container automatically runs:
 ```bash
@@ -70,23 +71,13 @@ make clean            # Clean temporary files
 make help             # See all commands
 ```
 
-## Without Dev Container?
+## Development Policy
 
-If you're not using Dev Container:
+This project is developed **only** with Dev Container.
 
-```bash
-# 1. Install uv
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# 2. Install dependencies
-make install-dev
-
-# 3. Initialize DB
-make init-db
-
-# 4. Run
-make dev
-```
+- ✅ Valid: VS Code/Cursor + Reopen in Container
+- ✅ Valid: Dev Container CLI (`devcontainer up --workspace-folder .`)
+- ❌ Not supported: local/manual setup outside Dev Container
 
 ## Project Structure
 
@@ -270,15 +261,18 @@ make install-dev
 
 **No code changes** - SQLAlchemy handles everything.
 
-📖 **See complete guide**: For PostgreSQL, MySQL, MariaDB, Docker Compose and more, check the [Database Change Guide in Development.md](./development.md#-change-database-engine)
+📖 **See complete guide**: For PostgreSQL, MySQL, MariaDB, Docker Compose and more, check the [Database Change Guide in Development.md](./DEVELOPMENT.md#-change-database-engine)
 
 ## Troubleshooting
 
-### Error: "uv not found"
+### Error: "Dev Container not available"
 
 ```bash
-# Install uv
-curl -LsSf https://astral.sh/uv/install.sh | sh
+# Install Dev Container CLI
+npm install -g @devcontainers/cli
+
+# Start container
+devcontainer up --workspace-folder .
 ```
 
 ### Error: "Database locked"

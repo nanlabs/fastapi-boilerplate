@@ -976,10 +976,14 @@ LOG_LEVEL=WARNING
 
 ## Troubleshooting
 
-### Error: "uv not found"
+### Error: "Dev Container not available"
 
 ```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
+# Install Dev Container CLI
+npm install -g @devcontainers/cli
+
+# Start container
+devcontainer up --workspace-folder .
 ```
 
 ### Error: "Database is locked"

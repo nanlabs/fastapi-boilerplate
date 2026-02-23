@@ -15,45 +15,42 @@
 
 ## 🚀 Quick Start
 
-**New to this project?** → Start with the **[📖 Getting Started Guide](./docs/getting-started.md)**
+**New to this project?** → Start with the **[📖 Getting Started Guide](./docs/GETTING_STARTED.md)**
 
-### Option 1: Dev Container (Recommended)
+### Dev Container (Required)
 
-1. Open this project in VS Code
-2. Click "Reopen in Container" when prompted
-3. Wait for the setup to complete (~2 minutes)
-4. Run `make dev`
+This project is always developed inside Dev Container.
 
-### Option 2: Manual Setup
+Choose one of these entry paths:
+
+1. **Editor (VS Code or Cursor)**
+   - Open the project
+   - Click **"Reopen in Container"** when prompted
+
+2. **Dev Container CLI**
+   - Run `devcontainer up --workspace-folder .`
+   - Then open the workspace in your editor of choice
+
+After the container is ready (~2 minutes):
 
 ```bash
-# Install uv
-curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Install dependencies
-make install-dev
-
-# Initialize database
-make init-db
-
-# Run server
 make dev
 ```
 
 Visit http://localhost:8000/docs to see the API documentation.
 
-**Full installation guide**: [docs/getting-started.md](./docs/getting-started.md)
+**Full installation guide**: [docs/GETTING_STARTED.md](./docs/GETTING_STARTED.md)
 
 ## 📚 Documentation
 
 Complete documentation is available in the [`docs/`](./docs) folder:
 
-- **[Getting Started](./docs/getting-started.md)** - Installation and first steps
-- **[Development Guide](./docs/development.md)** - Creating features, testing, and best practices
-- **[Architecture](./docs/architecture.md)** - Technical decisions and comparisons
-- **[API Documentation](./docs/api.md)** - API endpoints and usage examples
+- **[Getting Started](./docs/GETTING_STARTED.md)** - Installation and first steps
+- **[Development Guide](./docs/DEVELOPMENT.md)** - Creating features, testing, and best practices
+- **[Architecture](./docs/ARCHITECTURE.md)** - Technical decisions and comparisons
+- **[API Documentation](./docs/API.md)** - API endpoints and usage examples
 
-Or visit the [Documentation Index](./docs/index.md) for a complete overview.
+Or visit the [Documentation Index](./docs/INDEX.md) for a complete overview.
 
 ## 🛠️ Common Commands
 
@@ -95,4 +92,4 @@ MIT License - see [LICENSE](./LICENSE) file for details.
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please read our [Development Guide](./docs/development.md) for details on our development process.
+Contributions are welcome! Please read our [Development Guide](./docs/DEVELOPMENT.md) for details on our development process.
