@@ -32,7 +32,8 @@ df["total_charges"] = np.round(df["tenure_months"] * df["monthly_charges"], 2)
 # Fechas aleatorias en el último año
 start_date = datetime(2023, 1, 1)
 df["last_interaction_date"] = [
-    start_date + timedelta(days=random.randint(0, 365)) for _ in range(n_rows)
+    start_date + timedelta(days=random.randint(0, 365))
+    for _ in range(n_rows)  # nosec B311
 ]
 
 # Inyección de valores nulos (~7% de celdas aleatorias)

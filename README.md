@@ -1,95 +1,59 @@
 # FastAPI Boilerplate
 
-> A modern, production-ready FastAPI boilerplate with SQLite, Alembic migrations, and comprehensive tooling.
+A production-ready, opinionated FastAPI boilerplate with standard response envelopes, database migrations, structured logging, and a full Dev Container workflow.
 
-## ✨ Features
+## What's included
 
-- ⚡ **FastAPI** - Modern, fast web framework for building APIs
-- 🗄️ **SQLite + SQLAlchemy** - Lightweight database with powerful ORM
-- 🔄 **Alembic** - Database migrations made easy
-- 🧪 **Pytest** - Comprehensive testing suite
-- 🎨 **Ruff** - Lightning-fast linting and formatting
-- 🔍 **MyPy** - Static type checking with strict mode
-- 🐳 **Dev Containers** - Consistent development environment
-- 📦 **uv** - Fast Python package management
+- **FastAPI** with versioned endpoints (`/api/v1/...`)
+- **Standard response envelope** on every API response
+- **SQLite** by default, ready for PostgreSQL via environment variable
+- **Alembic** migrations with startup initialization
+- **SQLAlchemy 2.0** ORM with typed models
+- **Request ID tracing** via `X-Request-ID` header
+- **Structured logging** (`DEBUG=true` text, `DEBUG=false` JSON)
+- **MyPy strict** type checking
+- **Ruff** linting and formatting
+- **Dev Container** workflow
 
-## 🚀 Quick Start
+## Quick start
 
-**New to this project?** → Start with the **[📖 Getting Started Guide](./docs/GETTING_STARTED.md)**
-
-### Dev Container (Required)
-
-This project is always developed inside Dev Container.
-
-Choose one of these entry paths:
-
-1. **Editor (VS Code or Cursor)**
-   - Open the project
-   - Click **"Reopen in Container"** when prompted
-
-2. **Dev Container CLI**
-   - Run `devcontainer up --workspace-folder .`
-   - Then open the workspace in your editor of choice
-
-After the container is ready (~2 minutes):
+> Development happens inside the Dev Container.
 
 ```bash
-make dev
+# VS Code / Cursor
+# Open project and choose "Reopen in Container"
+
+# CLI alternative
+devcontainer up --workspace-folder .
 ```
 
-Visit http://localhost:8000/docs to see the API documentation.
-
-**Full installation guide**: [docs/GETTING_STARTED.md](./docs/GETTING_STARTED.md)
-
-## 📚 Documentation
-
-Complete documentation is available in the [`docs/`](./docs) folder:
-
-- **[Getting Started](./docs/GETTING_STARTED.md)** - Installation and first steps
-- **[Development Guide](./docs/DEVELOPMENT.md)** - Creating features, testing, and best practices
-- **[Architecture](./docs/ARCHITECTURE.md)** - Technical decisions and comparisons
-- **[API Documentation](./docs/API.md)** - API endpoints and usage examples
-
-Or visit the [Documentation Index](./docs/INDEX.md) for a complete overview.
-
-## 🛠️ Common Commands
+Once the container is ready:
 
 ```bash
-make dev              # Run development server
-make test             # Run tests
-make test-coverage    # Run tests with coverage
-make lint             # Check code quality
-make format           # Format code
-make all-checks       # Run all quality checks
-make help             # See all available commands
+make dev        # Server at http://localhost:8000
+make test       # Run tests
+make all-checks # Lint + type-check + security
 ```
 
-## 📁 Project Structure
+API docs: http://localhost:8000/docs
 
-```
-fastapi-boilerplate/
-├── app/              # Application code
-│   ├── api/          # API endpoints, schemas, services
-│   ├── core/         # Configuration
-│   ├── db/           # Database layer
-│   │   └── models/   # SQLAlchemy models
-│   └── main.py       # Application entry point
-├── docs/             # Documentation
-├── tests/            # Test suite
-├── alembic/          # Database migrations
-└── .devcontainer/    # Dev container configuration
-```
+## Documentation
 
-## 🔗 Links
+| Doc | Description |
+|---|---|
+| [Getting Started](./docs/GETTING_STARTED.md) | Dev Container setup and first run |
+| [Project Structure](./docs/PROJECT_STRUCTURE.md) | Annotated repository layout |
+| [Architecture](./docs/ARCHITECTURE.md) | Decisions, patterns, and rationale |
+| [API Reference](./docs/API.md) | Endpoints and response envelope |
+| [Development Guide](./docs/DEVELOPMENT.md) | Add resources end-to-end |
+| [Database Guide](./docs/DATABASE.md) | SQLite, PostgreSQL, migrations |
+| [Configuration](./docs/CONFIGURATION.md) | Environment variables |
+| [Testing Guide](./docs/TESTING.md) | Test structure and patterns |
 
-- [Swagger UI](http://localhost:8000/docs) - Interactive API documentation
-- [ReDoc](http://localhost:8000/redoc) - Alternative API documentation
-- [FastAPI Documentation](https://fastapi.tiangolo.com/)
+## Contributing
 
-## 📄 License
+See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
-MIT License - see [LICENSE](./LICENSE) file for details.
+## License
 
-## 🤝 Contributing
-
-Contributions are welcome! Please read our [Development Guide](./docs/DEVELOPMENT.md) for details on our development process.
+MIT — see [LICENSE](./LICENSE).

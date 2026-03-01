@@ -1,13 +1,23 @@
 """Project service for business logic."""
 
+from dataclasses import dataclass
+
 from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
 from app.api.exceptions import ConflictError, NotFoundError, SortingValidationError
-from app.api.schemas.api import ListResponse, PaginationParams, SearchParams, SortingParams
-from app.api.schemas.project import ProjectCreate, ProjectResponse, ProjectUpdate
-from app.api.services.utils import apply_sorting, build_list_response
+from app.api.schemas.common.params import PaginationParams, SearchParams, SortingParams
+from app.api.schemas.v1.project import ProjectCreate, ProjectResponse, ProjectUpdate
+from app.api.services.utils import apply_sorting
 from app.db.models.project import Project
+
+
+@dataclass
+class ListResult[T]:
+    """Result from a list query including total count."""
+
+    data: list[T]
+    total: int
 
 
 class ProjectService:
@@ -22,7 +32,7 @@ class ProjectService:
         pagination: PaginationParams,
         sorting: SortingParams,
         search_params: SearchParams,
-    ) -> ListResponse[ProjectResponse]:
+    ) -> ListResult[ProjectResponse]:
         """List all projects with pagination, sorting, and search."""
         query = self.db.query(Project)
 
@@ -44,11 +54,11 @@ class ProjectService:
         else:
             query = query.order_by(Project.created_at.desc())
 
+        total = query.count()
         projects = query.offset(pagination.skip).limit(pagination.limit).all()
-
         data = [self._build_project_response(project) for project in projects]
 
-        return build_list_response(pagination, sorting, search_params, data)
+        return ListResult(data=data, total=total)
 
     def create_project(self, project_data: ProjectCreate) -> ProjectResponse:
         """Create a new project."""

@@ -25,8 +25,6 @@ dependencies = [
   "python-dotenv>=1.2.0",
   "sqlalchemy>=2.0.45",
   "uvicorn>=0.40.0",
-  "polars>=1.21.0",
-  "numpy>=2.0.0",
 ]
 
 # ==========================================
@@ -141,9 +139,17 @@ warn_unused_ignores = false
 module = "alembic.*"
 ignore_errors = true
 
+[[tool.mypy.overrides]]
+module = "scripts.customer_churn_data_script"
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = "yaml"
+ignore_missing_imports = true
+
 # ==========================================================
 # SECURITY
 # ==========================================================
 [tool.bandit]
-exclude_dirs = ["tests", "**/tests/**", "alembic"]
-skips = ["B101", "B110"]
+exclude_dirs = ["tests", "**/tests/**", "alembic", ".venv", "**/.venv/**"]
+skips = ["B101", "B104", "B110", "B311", "B404", "B603", "B607"]

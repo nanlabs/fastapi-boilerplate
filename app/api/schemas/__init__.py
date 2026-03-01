@@ -1,18 +1,14 @@
 """API schemas for request/response validation."""
 
-from app.api.schemas.api import (
-    ListQueryParams,
-    ListResponse,
+from app.api.schemas.common.params import (
     PaginationParams,
     SearchParams,
     SortDirection,
     SortingParams,
 )
-from app.api.schemas.project import ProjectCreate, ProjectResponse
+from app.api.schemas.v1.project import ProjectCreate, ProjectResponse
 
 __all__ = [
-    "ListQueryParams",
-    "ListResponse",
     "PaginationParams",
     "ProjectCreate",
     "ProjectResponse",

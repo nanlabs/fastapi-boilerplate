@@ -1,23 +1,19 @@
-"""Unit tests for health check endpoint."""
+"""Tests for health endpoints."""
 
 from fastapi.testclient import TestClient
 
 
-def test_health_check(client: TestClient) -> None:
-    """Test health check endpoint."""
-    response = client.get("/api/v1/healthz")
-    assert response.status_code == 200
-    data = response.json()
-    assert data["status"] == "healthy"
-    assert "timestamp" in data
-    assert "service" in data
+class TestHealthCheck:
+    def test_healthz_returns_envelope(self, client: TestClient) -> None:
+        response = client.get("/api/v1/healthz")
+        assert response.status_code == 200
+        body = response.json()
+        assert body["success"] is True
+        assert body["dev_code"] == "HEALTH_OK"
+        assert body["data"]["status"] == "healthy"
+        assert "request_id" in body["metadata"]
 
-
-def test_root_endpoint(client: TestClient) -> None:
-    """Test root endpoint."""
-    response = client.get("/")
-    assert response.status_code == 200
-    data = response.json()
-    assert "message" in data
-    assert "docs" in data
-    assert "health" in data
+    def test_ping_returns_simple_ok(self, client: TestClient) -> None:
+        response = client.get("/ping")
+        assert response.status_code == 200
+        assert response.json() == {"status": "ok"}

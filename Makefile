@@ -134,7 +134,7 @@ all-checks:
 	uv run ruff check $(or $(filter-out $@,$(MAKECMDGOALS)),$(DIR))
 	uv run ruff format --check $(or $(filter-out $@,$(MAKECMDGOALS)),$(DIR))
 	uv run mypy $(or $(filter-out $@,$(MAKECMDGOALS)),$(DIR))
-	uv run bandit -r $(or $(filter-out $@,$(MAKECMDGOALS)),$(DIR))
+	uv run bandit -c pyproject.toml -r $(or $(filter-out $@,$(MAKECMDGOALS)),$(DIR))
 	@echo "OK: All code quality checks complete."
 
 %:

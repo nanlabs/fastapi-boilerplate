@@ -9,9 +9,10 @@ from __future__ import annotations
 import ctypes
 import os
 import signal
-import subprocess
+import subprocess  # nosec B404
 import sys
 import time
+from typing import Any, cast
 
 
 def is_windows() -> bool:
@@ -30,12 +31,11 @@ def parent_is_alive(ppid: int) -> bool:
 
     # Windows: check if process handle is valid
     PROCESS_QUERY_LIMITED_INFORMATION = 0x1000  # pylint: disable=invalid-name
-    handle = ctypes.windll.kernel32.OpenProcess(  # type: ignore[attr-defined]
-        PROCESS_QUERY_LIMITED_INFORMATION, 0, ppid
-    )
+    kernel32 = cast(Any, ctypes.windll).kernel32  # type: ignore[attr-defined]
+    handle = kernel32.OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, 0, ppid)
     if handle == 0:
         return False
-    ctypes.windll.kernel32.CloseHandle(handle)  # type: ignore[attr-defined]
+    kernel32.CloseHandle(handle)
     return True
 
 
@@ -50,13 +50,10 @@ def kill_process_tree(proc: subprocess.Popen[bytes]) -> None:
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
             check=False,
-        )
+        )  # nosec B603,B607
     else:
         try:
-            os.killpg(  # type: ignore[attr-defined]  # pylint: disable=no-member
-                os.getpgid(proc.pid),  # type: ignore[attr-defined]  # pylint: disable=no-member
-                signal.SIGTERM,
-            )
+            os.killpg(os.getpgid(proc.pid), signal.SIGTERM)  # pylint: disable=no-member
         except ProcessLookupError:
             return
 
@@ -73,7 +70,7 @@ def main(argv: list[str]) -> int:
         "uvicorn",
         "app.main:app",
         "--host",
-        "0.0.0.0",
+        "0.0.0.0",  # nosec B104
         "--port",
         "8000",
         "--reload",
@@ -89,7 +86,7 @@ def main(argv: list[str]) -> int:
     env = os.environ.copy()
 
     if not has_custom_command:
-        init_result = subprocess.run(
+        init_result = subprocess.run(  # nosec B603,B607
             ["uv", "run", "python", "scripts/init_db.py"],
             check=False,
         )
@@ -102,9 +99,9 @@ def main(argv: list[str]) -> int:
     if is_windows():
         creationflags = subprocess.CREATE_NEW_PROCESS_GROUP  # type: ignore[attr-defined]
     else:
-        preexec_fn = os.setsid  # type: ignore[attr-defined]  # pylint: disable=no-member
+        preexec_fn = os.setsid  # pylint: disable=no-member
 
-    proc = subprocess.Popen(  # pylint: disable=consider-using-with,subprocess-popen-preexec-fn
+    proc = subprocess.Popen(  # nosec B603  # pylint: disable=consider-using-with,subprocess-popen-preexec-fn
         cmd,
         stdin=None,
         stdout=None,

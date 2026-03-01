@@ -5,32 +5,32 @@ import os
 import time
 from collections.abc import Iterator
 from contextlib import contextmanager
-from typing import TextIO
+from typing import Any, TextIO
 
 from alembic.config import Config
 from alembic.runtime.migration import MigrationContext
 from sqlalchemy import inspect
-from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.orm import Session
 
 from alembic import command, script
 from app.core.config import settings
 from app.db.models.base import Base
 from app.db.seed_data import load_seed_data
-from app.db.session import SESSION_LOCAL, engine
+from app.db.session import engine
 
 logger = logging.getLogger("uvicorn.error")
 
 # Platform-specific imports for file locking
+fcntl: Any
 try:
     import fcntl
 except ImportError:
-    fcntl = None  # type: ignore[assignment, misc]  # Windows doesn't have fcntl
+    fcntl = None  # Windows doesn't have fcntl
 
+msvcrt: Any
 try:
     import msvcrt
 except ImportError:  # pragma: no cover
-    msvcrt = None  # type: ignore[assignment, misc]  # Unix doesn't have msvcrt  # pragma: no cover
+    msvcrt = None  # Unix doesn't have msvcrt  # pragma: no cover
 
 
 def try_acquire_lock(lock_file: TextIO) -> None:
@@ -39,15 +39,16 @@ def try_acquire_lock(lock_file: TextIO) -> None:
         if msvcrt is None:
             raise RuntimeError("msvcrt module not available on Windows")
         try:
-            msvcrt.locking(lock_file.fileno(), msvcrt.LK_NBLCK, 1)  # type: ignore[attr-defined, union-attr]  # pylint: disable=line-too-long
+            msvcrt.locking(lock_file.fileno(), msvcrt.LK_NBLCK, 1)  # pylint: disable=line-too-long
         except OSError as exc:
             raise BlockingIOError from exc
     else:
         if fcntl is None:
             raise RuntimeError("fcntl module not available on Unix")
         try:
-            fcntl.flock(  # type: ignore[attr-defined, union-attr]
-                lock_file.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB  # type: ignore[attr-defined]
+            fcntl.flock(
+                lock_file.fileno(),
+                fcntl.LOCK_EX | fcntl.LOCK_NB,
             )
         except OSError as exc:
             raise BlockingIOError from exc
@@ -58,11 +59,11 @@ def release_lock(lock_file: TextIO) -> None:
     if os.name == "nt":
         if msvcrt is None:
             raise RuntimeError("msvcrt module not available on Windows")
-        msvcrt.locking(lock_file.fileno(), msvcrt.LK_UNLCK, 1)  # type: ignore[attr-defined, union-attr]  # pylint: disable=line-too-long
+        msvcrt.locking(lock_file.fileno(), msvcrt.LK_UNLCK, 1)  # pylint: disable=line-too-long
     else:
         if fcntl is None:
             raise RuntimeError("fcntl module not available on Unix")
-        fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)  # type: ignore[attr-defined, union-attr]
+        fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
 
 
 @contextmanager
@@ -207,7 +208,7 @@ def init_database() -> None:
 
 def seed_default_data() -> None:
     """Load and process seed data from configuration.
-    
+
     Extend this function to add your own seed data initialization logic.
     By default, it only validates that the seed data configuration is loadable.
     """
