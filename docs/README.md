@@ -1,6 +1,8 @@
 # FastAPI Boilerplate Documentation
 
-Welcome to the FastAPI Boilerplate documentation. This folder contains all the information needed to run and extend the project.
+Welcome to the FastAPI Boilerplate documentation hub.
+
+This boilerplate is powered by NaNLABS and designed to help teams move from idea to production-ready API with a clean, repeatable backend foundation.
 
 ## Contents
 
@@ -43,6 +45,7 @@ API contract reference:
 - [Main README](../README.md) - Project overview
 - [Swagger UI](http://localhost:8000/docs) - Interactive docs (when server is running)
 - [ReDoc](http://localhost:8000/redoc) - Alternative docs
+- [NaNLABS](https://www.nanlabs.com/) - Team behind this boilerplate
 
 ## Where to Start
 
