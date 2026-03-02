@@ -7,11 +7,11 @@ from collections.abc import Iterator
 from contextlib import contextmanager
 from typing import Any, TextIO
 
+from alembic.config import Config
+from alembic.runtime.migration import MigrationContext
 from sqlalchemy import inspect
 
 from alembic import command, script
-from alembic.config import Config
-from alembic.runtime.migration import MigrationContext
 from app.core.config import settings
 from app.db.models.base import Base
 from app.db.seed_data import load_seed_data
