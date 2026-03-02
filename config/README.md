@@ -18,3 +18,9 @@ Why this exists:
 - Keeping seed behavior explicit avoids hidden data mutations in new projects.
 
 For full database setup and migration behavior, see `docs/DATABASE.md`.
+
+## Related docs
+
+- `docs/CONFIGURATION.md` for environment variables.
+- `docs/GETTING_STARTED.md` for first-run setup.
+- `docs/COMMANDS.md` for `make init-db` and environment commands.

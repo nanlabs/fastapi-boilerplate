@@ -81,3 +81,9 @@ Curated references to extend this boilerplate intentionally. These links are sel
 - Add only references that directly help maintain or extend this boilerplate.
 - Prefer links with concrete examples over generic articles.
 - Remove stale references during regular docs maintenance.
+
+## Related docs
+
+- `ARCHITECTURE.md` for current design decisions in this repository.
+- `DEVELOPMENT.md` for conventions to apply when extending the codebase.
+- `BOOTSTRAP_CHECKLIST.md` for turning this template into your product repo.

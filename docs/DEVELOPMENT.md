@@ -8,7 +8,7 @@
 - Use query dependencies (`get_pagination`, `get_sorting`, `get_search`) for list endpoints.
 - Prefer test-first changes (red -> green -> refactor).
 
-If you are new to this repository, start with `GOLDEN_PATH.md` before this guide.
+If you are new to this repository, read the "End-to-end walkthrough" section at the bottom of this guide first.
 
 ## Golden workflow for a new resource
 
@@ -35,6 +35,8 @@ Before opening a PR:
 make test
 make all-checks
 ```
+
+For command details and alternatives, see `COMMANDS.md`.
 
 ## Error and response conventions
 
@@ -64,3 +66,53 @@ make all-checks
 - Catching broad exceptions in endpoint functions.
 - Returning ad-hoc response shapes that bypass envelope helpers.
 - Merging schema changes without migration review.
+
+## End-to-end walkthrough
+
+By following the golden workflow above you will:
+
+- run the API locally in the Dev Container,
+- understand the service-first architecture,
+- implement a feature end-to-end with tests and docs,
+- keep quality gates green.
+
+### API contract note
+
+Use envelope-based responses for all API handlers and keep `dev_code` values stable. This allows frontend/mobile clients to rely on predictable success/error parsing.
+
+### Starter client examples
+
+cURL:
+
+```bash
+curl -X POST "http://localhost:8000/api/v1/projects" \
+  -H "Content-Type: application/json" \
+  -H "X-Request-ID: demo-dev-guide" \
+  -d '{"name":"My First Project","description":"Created from cURL"}'
+```
+
+TypeScript fetch:
+
+```typescript
+type ApiResponse<T> = {
+  success: boolean;
+  dev_code: string;
+  message: string;
+  data: T | null;
+  errors: Array<{ field?: string; message: string }>;
+  metadata: { request_id: string; timestamp: string };
+};
+
+type Project = { id: number; name: string; description: string | null };
+
+const response = await fetch("http://localhost:8000/api/v1/projects");
+const body = (await response.json()) as ApiResponse<Project[]>;
+if (!body.success) throw new Error(`${body.dev_code}: ${body.message}`);
+console.log(body.data);
+```
+
+## Related docs
+
+- `API.md` for response envelope and endpoint contract details.
+- `TESTING.md` for fixture and assertion patterns.
+- `COMMANDS.md` for all available `make` targets.

@@ -1,14 +1,22 @@
 # Documentation Hub
 
-This folder is organized by developer journey, not only by technical topic.
+Welcome. This folder is organized by developer journey so you can find the right guide quickly.
 
-## Read by Persona
+## Start Here ✨
+
+If this is your first 10 minutes in the project:
+
+1. `GETTING_STARTED.md`
+2. `COMMANDS.md`
+3. `DEVELOPMENT.md`
+
+## Read by Role
 
 ### New Team Member
 
 1. `GETTING_STARTED.md`
-2. `SCOPE.md`
-3. `TIPS_AND_TRICKS.md`
+2. `TIPS_AND_TRICKS.md`
+3. `DEVELOPMENT.md`
 
 ### Feature Developer
 
@@ -17,31 +25,31 @@ This folder is organized by developer journey, not only by technical topic.
 3. `TESTING.md`
 4. `DATABASE.md`
 
-### Tech Lead / Reviewer
+### Tech Lead or Reviewer
 
 1. `ARCHITECTURE.md`
 2. `PROJECT_STRUCTURE.md`
 3. `CONFIGURATION.md`
 4. `BOOTSTRAP_CHECKLIST.md`
 
-## Core Guides
+## Core Guides 📘
 
-- `SCOPE.md`: what this template includes, excludes, and where to extend.
-- `GETTING_STARTED.md`: first run and environment setup.
-- `GOLDEN_PATH.md`: fastest way to build the first feature end-to-end.
-- `DEVELOPMENT.md`: end-to-end resource workflow with TDD mindset.
-- `ARCHITECTURE.md`: boundaries and design decisions.
-- `API.md`: current endpoint contract and response envelope.
-- `TESTING.md`: test structure, fixtures, and patterns.
-- `DATABASE.md`: migration workflow and database setup.
-- `CONFIGURATION.md`: environment variables and runtime behavior.
-- `TIPS_AND_TRICKS.md`: common pitfalls and productivity tips.
-- `BOOTSTRAP_CHECKLIST.md`: convert this repo into your project safely.
-- `REFERENCES.md`: curated external links for extending the template.
+| Guide | Why read it |
+|---|---|
+| `GETTING_STARTED.md` | Run the project locally and validate setup |
+| `COMMANDS.md` | Find every `make` target by purpose |
+| `DEVELOPMENT.md` | Build the first feature and apply day-to-day conventions |
+| `ARCHITECTURE.md` | Review layering rules and design tradeoffs |
+| `API.md` | Consume the API contract and envelope format |
+| `TESTING.md` | Follow test structure and assertion patterns |
+| `DATABASE.md` | Work with migrations and DB setup safely |
+| `CONFIGURATION.md` | Configure runtime behavior via environment variables |
+| `TIPS_AND_TRICKS.md` | Shortcuts for faster local iteration |
+| `REFERENCES.md` | External links curated for practical extension work |
 
-## Quick Links
+## Quick Links 🔗
 
 - Main project overview: `../README.md`
+- Contributing workflow: `../CONTRIBUTING.md`
 - Swagger UI (when running): `http://localhost:8000/docs`
 - ReDoc (when running): `http://localhost:8000/redoc`
-- NaNLABS: `https://www.nanlabs.com/`

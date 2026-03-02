@@ -1,6 +1,6 @@
 # Getting Started
 
-## Goal
+## Goal 🎯
 
 Reach a successful local run in 10-15 minutes with tests and checks passing.
 
@@ -27,7 +27,7 @@ Minimum host setup:
 devcontainer exec --workspace-folder . make <target>
 ```
 
-## Step 1: Open in Dev Container
+## Step 1: Open in Dev Container 🐳
 
 Use one option:
 
@@ -64,7 +64,7 @@ API endpoints:
 - Swagger UI: `http://localhost:8000/docs`
 - ReDoc: `http://localhost:8000/redoc`
 
-## Step 4: Validate your setup
+## Step 4: Validate your setup ✅
 
 From another terminal in the same container:
 
@@ -104,3 +104,9 @@ Run this after cloning on Linux, macOS, or Windows:
   - re-run checkout if needed.
 
 See `TIPS_AND_TRICKS.md` for troubleshooting shortcuts.
+
+## Related docs
+
+- `DEVELOPMENT.md` for the recommended first feature workflow.
+- `DEVELOPMENT.md` for resource implementation conventions.
+- `DATABASE.md` for migrations and PostgreSQL setup.

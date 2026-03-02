@@ -55,3 +55,9 @@ fastapi-boilerplate/
 | `db/` | ORM models and sessions | `core/config.py` |
 
 Do not import `endpoints/` from services. Do not import services in schemas.
+
+## Related docs
+
+- `ARCHITECTURE.md` for rationale behind these boundaries.
+- `DEVELOPMENT.md` for implementation workflow by layer.
+- `API.md` for how endpoint contracts are exposed.

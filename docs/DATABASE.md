@@ -8,8 +8,6 @@ No extra configuration is needed. The database file is created at `data/app.db` 
 make dev
 ```
 
-The default SQLite file is stored at `data/app.db`.
-
 ## Switching to PostgreSQL
 
 Set only `DATABASE_URL` in `.env`:
@@ -63,3 +61,9 @@ make migration-downgrade
 - `sqlite3.OperationalError: unable to open database file`: run `make init-db`.
 - PostgreSQL connection errors: verify DB service and `DATABASE_URL`.
 - Alembic multiple heads: create a merge migration.
+
+## Related docs
+
+- `CONFIGURATION.md` for environment variable setup.
+- `DEVELOPMENT.md` for model -> migration -> endpoint workflow.
+- `COMMANDS.md` for full migration command reference.

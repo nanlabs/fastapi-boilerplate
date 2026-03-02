@@ -34,7 +34,13 @@ Use this checklist when creating a new product repository from this boilerplate.
 
 ## 6) Documentation done criteria
 
-- `SCOPE.md` updated for product boundaries.
+- `README.md` (Scope section) updated for product boundaries.
 - `API.md` reflects real endpoints and examples.
 - `DEVELOPMENT.md` includes project-specific conventions.
 - `REFERENCES.md` includes only relevant links for your stack.
+
+## Related docs
+
+- `README.md` (Scope section) to define boundaries early.
+- `ARCHITECTURE.md` to preserve layering and design intent.
+- `CONTRIBUTING.md` to align team workflow and quality gates.

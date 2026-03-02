@@ -1,12 +1,5 @@
 # Tips and Tricks
 
-## Host and container workflow
-
-- Use host for editing, AI tooling, and `git` operations.
-- Use Dev Container for all project execution commands.
-- From host terminal, run commands with:
-  `devcontainer exec --workspace-folder . make <target>`.
-
 ## Local productivity
 
 - Use `make test-unit` for fast feedback while coding.
@@ -31,12 +24,6 @@
 - Keep `dev_code` stable once clients consume it.
 - Include both success and error scenarios in endpoint tests.
 
-## Common mistakes
-
-- Putting business logic in endpoint handlers.
-- Returning non-envelope responses in API v1 handlers.
-- Adding endpoint-level `try/except` blocks instead of custom exceptions.
-
 ## Cross-platform guardrails
 
 - Keep Git line endings consistent:
@@ -53,3 +40,9 @@
 - SSH workflow: ensure host agent is running and key loaded (`ssh-add`).
 - Reference:
   `https://code.visualstudio.com/remote/advancedcontainers/sharing-git-credentials`
+
+## Related docs
+
+- `GETTING_STARTED.md` for first-run troubleshooting.
+- `COMMANDS.md` for full command options.
+- `DEVELOPMENT.md` for implementation standards.

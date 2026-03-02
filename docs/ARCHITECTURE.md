@@ -10,6 +10,8 @@ The boilerplate follows a layered API architecture:
 - **`schemas/v1`**: version-specific request/response models.
 - **`core`**: cross-cutting concerns (middleware, logging, exception handling).
 
+In short: endpoints orchestrate, services decide, schemas define contracts, and `core` enforces consistency.
+
 ## Why this architecture
 
 - Keeps HTTP concerns separate from business logic.
@@ -77,3 +79,9 @@ Tradeoff:
 - `services` can depend on `db`, `schemas`, and domain exceptions.
 - `schemas` should not import from `services` or `endpoints`.
 - `core` handles shared runtime concerns and global handlers.
+
+## Related docs
+
+- `PROJECT_STRUCTURE.md` for a concrete tree-level view.
+- `API.md` for envelope and endpoint contract examples.
+- `DEVELOPMENT.md` for day-to-day implementation rules.

@@ -2,14 +2,7 @@
 
 ## Setup
 
-All development happens inside the Dev Container. See [Getting Started](./docs/GETTING_STARTED.md).
-
-## Host vs Dev Container
-
-- Host is fine for `git` operations (`status`, `add`, `commit`, `push`) and editing tools.
-- Run all project commands inside Dev Container (`make test`, `make all-checks`, migrations, `make dev`).
-- Host bridge command:
-  `devcontainer exec --workspace-folder . make <target>`.
+All development happens inside the Dev Container. See [Getting Started](./docs/GETTING_STARTED.md) for setup steps and the host/container contract.
 
 ## Workflow
 
@@ -18,6 +11,14 @@ All development happens inside the Dev Container. See [Getting Started](./docs/G
 3. Implement.
 4. Run `make all-checks` and `make test`.
 5. Open a pull request.
+
+Recommended local loop:
+
+```bash
+make test-unit
+make autofix
+make all-checks
+```
 
 ## Adding a new resource
 
@@ -54,4 +55,6 @@ When behavior, contracts, or architecture change, update the relevant docs in `d
 - `API.md` for endpoint contract changes.
 - `ARCHITECTURE.md` for design/boundary changes.
 - `DEVELOPMENT.md` for workflow/convention changes.
-- `SCOPE.md` when project boundaries change.
+- `README.md` (Scope section) when project boundaries change.
+
+For a full list of available targets, see [Commands Reference](./docs/COMMANDS.md).

@@ -9,6 +9,8 @@ make test-integration
 make test-coverage
 ```
 
+For quality commands that complement tests, see `COMMANDS.md`.
+
 ## Test structure
 
 ```text
@@ -52,3 +54,9 @@ assert body["success"] is False
 assert body["dev_code"] == "NOT_FOUND"
 assert body["data"] is None
 ```
+
+## Related docs
+
+- `DEVELOPMENT.md` for test-first workflow expectations.
+- `API.md` for `dev_code` contract and envelope examples.
+- `TIPS_AND_TRICKS.md` for fast local iteration shortcuts.

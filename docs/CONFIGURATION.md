@@ -32,3 +32,9 @@ DATABASE_URL=postgresql://user:password@localhost:5432/mydb
 CORS_ORIGINS=https://myapp.com,https://admin.myapp.com
 HOST=0.0.0.0
 ```
+
+## Related docs
+
+- `GETTING_STARTED.md` for first local setup.
+- `DATABASE.md` for migration and DB workflow details.
+- `PROJECT_STRUCTURE.md` for where configuration is consumed.

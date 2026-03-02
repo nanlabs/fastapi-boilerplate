@@ -5,6 +5,8 @@
 - Development: `http://localhost:8000`
 - Version prefix: `/api/v1`
 
+Tip: keep a custom `X-Request-ID` while testing locally to correlate requests with logs.
+
 ## Health endpoints
 
 - `GET /ping`: infrastructure probe, no envelope.
@@ -149,3 +151,9 @@ async function listProjects(): Promise<void> {
   console.log(body.data);
 }
 ```
+
+## Related docs
+
+- `ARCHITECTURE.md` for response and error strategy decisions.
+- `DEVELOPMENT.md` for implementation conventions in endpoints/services.
+- `TESTING.md` for endpoint assertion patterns.

@@ -19,3 +19,5 @@ Before merging a migration:
 1. Ensure autogeneration output is reviewed manually.
 2. Ensure downgrade path is valid for local/dev environments.
 3. Ensure tests cover behavior tied to schema changes.
+
+For the complete migration command set, see `docs/COMMANDS.md`.
