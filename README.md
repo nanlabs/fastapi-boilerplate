@@ -96,7 +96,6 @@ Open docs:
 | [Tips and Tricks](./docs/TIPS_AND_TRICKS.md) | Debugging and productivity shortcuts |
 | [Bootstrap Checklist](./docs/BOOTSTRAP_CHECKLIST.md) | Turn this template into your product repo |
 | [References](./docs/REFERENCES.md) | Curated links to extend this boilerplate |
-| [DX Metrics & Rollout](./docs/DX_METRICS_AND_ROLLOUT.md) | Measure and evolve developer experience safely |
 
 ## Contributing
 

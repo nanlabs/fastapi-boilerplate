@@ -46,7 +46,6 @@ See [Testing Guide](./docs/TESTING.md) for patterns and fixtures.
 - `full-quality`: strict quality checks (`make all-checks`).
 - `tests`: full test suite (`make test`).
 - `mega-linter`: runs on PR/push with `.mega-linter.yml` (currently non-blocking rollout mode).
-- Track DX impact using `docs/DX_METRICS_AND_ROLLOUT.md`.
 
 ## Documentation expectations
 

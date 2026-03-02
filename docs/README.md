@@ -38,7 +38,6 @@ This folder is organized by developer journey, not only by technical topic.
 - `TIPS_AND_TRICKS.md`: common pitfalls and productivity tips.
 - `BOOTSTRAP_CHECKLIST.md`: convert this repo into your project safely.
 - `REFERENCES.md`: curated external links for extending the template.
-- `DX_METRICS_AND_ROLLOUT.md`: metrics and staged rollout for DX changes.
 
 ## Quick Links
 
