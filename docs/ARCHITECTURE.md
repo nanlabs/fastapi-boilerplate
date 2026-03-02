@@ -36,6 +36,7 @@ All success and error responses are standardized under:
 - Helpers: `make_item_response`, `make_list_response`, `make_error_response`
 
 Benefits:
+
 - Stable client contract.
 - Consistent metadata (`request_id`, `timestamp`, pagination context).
 - Consistent machine-readable codes via `dev_code`.
@@ -49,6 +50,7 @@ Tradeoff:
 Endpoints avoid local `try/except`; errors are mapped centrally in `app/core/exception_handlers.py`.
 
 Mapped examples:
+
 - `NotFoundError` -> `404 / NOT_FOUND`
 - `ConflictError` -> `409 / CONFLICT`
 - `SortingValidationError` -> `400 / INVALID_SORT_FIELD`

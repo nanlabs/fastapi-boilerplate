@@ -73,6 +73,7 @@ Validation error example (`422`):
 ### `GET /api/v1/projects`
 
 Query params:
+
 - `skip` (default `0`)
 - `limit` (default `100`, max `1000`)
 - `sort_by`
