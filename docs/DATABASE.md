@@ -8,6 +8,8 @@ No extra configuration is needed. The database file is created at `data/app.db` 
 make dev
 ```
 
+The default SQLite file is stored at `data/app.db`.
+
 ## Switching to PostgreSQL
 
 Set only `DATABASE_URL` in `.env`:
