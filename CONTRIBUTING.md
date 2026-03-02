@@ -45,7 +45,7 @@ See [Testing Guide](./docs/TESTING.md) for patterns and fixtures.
 - `fast-quality`: docs + lint + format checks.
 - `full-quality`: strict quality checks (`make all-checks`).
 - `tests`: full test suite (`make test`).
-- `mega-linter`: optional gate toggled via repository variable `ENABLE_MEGA_LINTER=true`.
+- `mega-linter`: runs on PR/push with `.mega-linter.yml` (currently non-blocking rollout mode).
 - Track DX impact using `docs/DX_METRICS_AND_ROLLOUT.md`.
 
 ## Documentation expectations

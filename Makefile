@@ -67,10 +67,9 @@ help:
 	@echo ""
 
 ensure-devcontainer:
-	@if [ "$$CI" = "true" ] || [ "$$CI" = "1" ]; then \
+	@if [ "$$CI" = "true" ] || [ "$$CI" = "1" ] || [ -f /.dockerenv ]; then \
 		exit 0; \
-	fi
-	@if [ ! -f /.dockerenv ]; then \
+	else \
 		echo "ERROR: This project must run inside the Dev Container."; \
 		echo ""; \
 		echo "Read README.md -> 'Quick Start (10-15 minutes)' for setup."; \
