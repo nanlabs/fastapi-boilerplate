@@ -7,8 +7,8 @@ on:
     branches: ["main"]
 
 jobs:
-  quality:
-    name: Quality Checks
+  fast-quality:
+    name: Fast Quality
     runs-on: ubuntu-latest
 
     steps:
@@ -26,13 +26,39 @@ jobs:
       - name: Install dependencies
         run: make install-dev
 
-      - name: Run quality checks
+      - name: Run fast checks
+        run: |
+          make check-docs
+          make lint
+          make format
+
+  full-quality:
+    name: Full Quality
+    runs-on: ubuntu-latest
+    needs: fast-quality
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Install dependencies
+        run: make install-dev
+
+      - name: Run full quality checks
         run: make all-checks
 
   tests:
     name: Tests
     runs-on: ubuntu-latest
-    needs: quality
+    needs: fast-quality
 
     steps:
       - name: Checkout
@@ -51,3 +77,25 @@ jobs:
 
       - name: Run tests
         run: make test
+
+  mega-linter:
+    name: Mega Linter
+    runs-on: ubuntu-latest
+    needs: [fast-quality, full-quality, tests]
+    if: ${{ vars.ENABLE_MEGA_LINTER == 'true' }}
+    permissions:
+      contents: read
+      pull-requests: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run MegaLinter
+        uses: oxsecurity/megalinter@v8
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: true
+          DEFAULT_BRANCH: main

@@ -1,72 +1,48 @@
-# FastAPI Boilerplate Documentation
+# Documentation Hub
 
-Welcome to the FastAPI Boilerplate documentation hub.
+This folder is organized by developer journey, not only by technical topic.
 
-This boilerplate is powered by NaNLABS and designed to help teams move from idea to production-ready API with a clean, repeatable backend foundation.
+## Read by Persona
 
-## Contents
+### New Team Member
 
-### [Getting Started](./GETTING_STARTED.md)
+1. `GETTING_STARTED.md`
+2. `SCOPE.md`
+3. `TIPS_AND_TRICKS.md`
 
-Quick start guide:
+### Feature Developer
 
-- Dev Container setup (required)
-- First run with Dev Container CLI or editor integration
-- Essential commands
+1. `DEVELOPMENT.md`
+2. `API.md`
+3. `TESTING.md`
+4. `DATABASE.md`
 
-### [Development Guide](./DEVELOPMENT.md)
+### Tech Lead / Reviewer
 
-End-to-end development workflow:
+1. `ARCHITECTURE.md`
+2. `PROJECT_STRUCTURE.md`
+3. `CONFIGURATION.md`
+4. `BOOTSTRAP_CHECKLIST.md`
 
-- Resource implementation flow
-- Testing patterns
-- Code quality checks
-- Error handling conventions
+## Core Guides
 
-### [Architecture](./ARCHITECTURE.md)
-
-Architecture and design decisions:
-
-- Layer boundaries
-- Response envelope strategy
-- Exception handling
-- Observability and request tracing
-
-### [API Documentation](./API.md)
-
-API contract reference:
-
-- Endpoints and examples
-- Response envelope
-- `dev_code` conventions
+- `SCOPE.md`: what this template includes, excludes, and where to extend.
+- `GETTING_STARTED.md`: first run and environment setup.
+- `GOLDEN_PATH.md`: fastest way to build the first feature end-to-end.
+- `DEVELOPMENT.md`: end-to-end resource workflow with TDD mindset.
+- `ARCHITECTURE.md`: boundaries and design decisions.
+- `API.md`: current endpoint contract and response envelope.
+- `TESTING.md`: test structure, fixtures, and patterns.
+- `DATABASE.md`: migration workflow and database setup.
+- `CONFIGURATION.md`: environment variables and runtime behavior.
+- `TIPS_AND_TRICKS.md`: common pitfalls and productivity tips.
+- `BOOTSTRAP_CHECKLIST.md`: convert this repo into your project safely.
+- `REFERENCES.md`: curated external links for extending the template.
+- `DX_METRICS_AND_ROLLOUT.md`: metrics and staged rollout for DX changes.
 
 ## Quick Links
 
-- [Main README](../README.md) - Project overview
-- [Swagger UI](http://localhost:8000/docs) - Interactive docs (when server is running)
-- [ReDoc](http://localhost:8000/redoc) - Alternative docs
-- [NaNLABS](https://www.nanlabs.com/) - Team behind this boilerplate
-
-## Where to Start
-
-1. New user: [Getting Started](./GETTING_STARTED.md)
-2. Building features: [Development Guide](./DEVELOPMENT.md)
-3. Understanding internals: [Architecture](./ARCHITECTURE.md)
-4. API integration: [API Documentation](./API.md)
-
-## External Resources
-
-- [FastAPI Documentation](https://fastapi.tiangolo.com/)
-- [uv Documentation](https://docs.astral.sh/uv/)
-- [Ruff Documentation](https://docs.astral.sh/ruff/)
-- [SQLAlchemy 2.0](https://docs.sqlalchemy.org/)
-- [Alembic](https://alembic.sqlalchemy.org/)
-- [Pydantic](https://docs.pydantic.dev/)
-
-## Contributing
-
-Documentation improvements are welcome.
-
-## License
-
-This project is licensed under MIT. See [LICENSE](../LICENSE) for details.
+- Main project overview: `../README.md`
+- Swagger UI (when running): `http://localhost:8000/docs`
+- ReDoc (when running): `http://localhost:8000/redoc`
+- NaNLABS: `https://www.nanlabs.com/`

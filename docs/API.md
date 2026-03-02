@@ -118,3 +118,33 @@ Response is `200` envelope (not `204`) with:
 
 - Swagger UI: `http://localhost:8000/docs`
 - ReDoc: `http://localhost:8000/redoc`
+
+## Client integration examples
+
+### cURL
+
+```bash
+curl -X GET "http://localhost:8000/api/v1/projects" \
+  -H "Accept: application/json" \
+  -H "X-Request-ID: api-docs-example"
+```
+
+### TypeScript fetch
+
+```typescript
+type ApiResponse<T> = {
+  success: boolean;
+  dev_code: string;
+  message: string;
+  data: T | null;
+  errors: Array<{ field?: string; message: string }>;
+  metadata: { request_id: string; timestamp: string };
+};
+
+async function listProjects(): Promise<void> {
+  const resp = await fetch("http://localhost:8000/api/v1/projects");
+  const body = (await resp.json()) as ApiResponse<Array<{ id: number; name: string }>>;
+  if (!body.success) throw new Error(`${body.dev_code}: ${body.message}`);
+  console.log(body.data);
+}
+```

@@ -5,70 +5,103 @@
 [![License](https://img.shields.io/github/license/nanlabs/fastapi-boilerplate)](./LICENSE)
 [![Powered by NaNLABS](https://img.shields.io/badge/powered%20by-NaNLABS-111827)](https://www.nanlabs.com/)
 
-A production-ready, opinionated FastAPI boilerplate designed for teams that want to ship faster without reinventing backend foundations.
+Opinionated FastAPI template for teams that want a strong backend baseline from day zero: clear layering, consistent API contracts, strict quality checks, and reproducible local setup.
 
-This project is **powered by NaNLABS** and built to be reusable across future APIs with strong defaults for architecture, testing, and developer experience.
+## Who This Is For
 
-## Why This Boilerplate
+Use this boilerplate when you need:
 
-- Clean **versioned API structure** (`/api/v1/...`) ready for future versions.
-- Consistent **APIResponse envelope** for success and error contracts.
-- Built-in **request tracing** with `X-Request-ID`.
-- Strong quality baseline with **Ruff**, **MyPy strict**, and **Bandit**.
-- Database lifecycle covered with **SQLAlchemy + Alembic**.
-- First-class **Dev Container** workflow for reproducible development.
+- a production-minded REST API foundation with versioned endpoints,
+- strict coding standards (`Ruff`, `MyPy strict`, `Bandit`),
+- consistent envelope responses (`APIResponse[T]`) across success and errors,
+- low-friction onboarding through a Dev Container-first workflow.
 
-## What You Get Out of the Box
+## What This Boilerplate Is Not
 
-- FastAPI with modular endpoints, dependencies, services, and schemas.
-- Standardized response metadata (`request_id`, timestamps, pagination context).
-- SQLite by default, PostgreSQL-ready through environment configuration.
-- Structured logging (`DEBUG=true` human-readable, `DEBUG=false` JSON).
-- Automated CI checks via GitHub Actions.
+- Not a batteries-included product framework (auth, queues, cache, multi-tenant are extension points).
+- Not an async-first ORM setup (current default uses SQLAlchemy sync sessions).
+- Not tied to a specific cloud provider or deployment platform.
 
-## Quick Start
+See `docs/SCOPE.md` for explicit in-scope/out-of-scope boundaries.
 
-> Development happens inside the Dev Container.
+## Core Principles
+
+- Thin endpoints, business logic in services.
+- No endpoint-level `try/except`; error mapping is centralized.
+- Stable machine-readable `dev_code` values for clients.
+- Test-first mindset and mandatory checks before merge.
+
+## Quick Start (10-15 minutes)
+
+Development happens inside the Dev Container.
 
 ```bash
 # VS Code / Cursor
-# Open the project and choose "Reopen in Container"
+# Open project, then choose "Reopen in Container"
 
 # CLI alternative
 devcontainer up --workspace-folder .
 ```
 
-Once the container is ready:
+If a `make` command fails with "must run inside the Dev Container", follow the setup above first.
+
+## Host vs Dev Container
+
+Use this as the default working model:
+
+- Host machine: editor, AI tooling, and `git` commands (`status/add/commit/push`).
+- Dev Container: application runtime and project commands (`make test`, `make all-checks`, migrations, `make dev`).
+
+Bridge command when working from host terminal:
 
 ```bash
-make dev        # API server at http://localhost:8000
-make test       # Run all tests
-make all-checks # Ruff + MyPy + Bandit
+devcontainer exec --workspace-folder . make <target>
 ```
 
-Open API docs:
+Inside the container:
+
+```bash
+make install-dev
+make init-db
+make dev
+```
+
+Validate setup:
+
+```bash
+curl -s http://localhost:8000/ping
+curl -s http://localhost:8000/api/v1/healthz
+make test
+make all-checks
+```
+
+Open docs:
 
 - Swagger UI: `http://localhost:8000/docs`
 - ReDoc: `http://localhost:8000/redoc`
 
-## Documentation
+## Documentation Map
 
-| Doc | Description |
+| Doc | Why read it |
 |---|---|
-| [Docs Home](./docs/README.md) | Central docs index and navigation |
-| [Getting Started](./docs/GETTING_STARTED.md) | Dev Container setup and first run |
-| [Project Structure](./docs/PROJECT_STRUCTURE.md) | Annotated repository layout |
-| [Architecture](./docs/ARCHITECTURE.md) | Design decisions and layer boundaries |
-| [API Reference](./docs/API.md) | Endpoints and envelope contract |
-| [Development Guide](./docs/DEVELOPMENT.md) | Add new resources end-to-end |
-| [Database Guide](./docs/DATABASE.md) | SQLite, PostgreSQL, and migrations |
-| [Configuration](./docs/CONFIGURATION.md) | Environment variables and runtime behavior |
-| [Testing Guide](./docs/TESTING.md) | Test patterns, fixtures, and strategy |
+| [Docs Home](./docs/README.md) | Choose your learning path |
+| [Scope](./docs/SCOPE.md) | Understand boundaries and extension points |
+| [Getting Started](./docs/GETTING_STARTED.md) | First run and environment setup |
+| [Golden Path](./docs/GOLDEN_PATH.md) | Recommended end-to-end flow for your first feature |
+| [Development Guide](./docs/DEVELOPMENT.md) | Build features end-to-end with conventions |
+| [Architecture](./docs/ARCHITECTURE.md) | Layering rules and key design decisions |
+| [API Reference](./docs/API.md) | Endpoint contract and response envelope |
+| [Database Guide](./docs/DATABASE.md) | SQLite/PostgreSQL and migrations |
+| [Testing Guide](./docs/TESTING.md) | Test strategy and fixtures |
+| [Tips and Tricks](./docs/TIPS_AND_TRICKS.md) | Debugging and productivity shortcuts |
+| [Bootstrap Checklist](./docs/BOOTSTRAP_CHECKLIST.md) | Turn this template into your product repo |
+| [References](./docs/REFERENCES.md) | Curated links to extend this boilerplate |
+| [DX Metrics & Rollout](./docs/DX_METRICS_AND_ROLLOUT.md) | Measure and evolve developer experience safely |
 
 ## Contributing
 
-Contributions are welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md).
+Contributions are welcome. Start with `CONTRIBUTING.md`.
 
 ## License
 
-MIT — see [LICENSE](./LICENSE).
+MIT. See `LICENSE`.

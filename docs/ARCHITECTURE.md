@@ -10,12 +10,23 @@ The boilerplate follows a layered API architecture:
 - **`schemas/v1`**: version-specific request/response models.
 - **`core`**: cross-cutting concerns (middleware, logging, exception handling).
 
+## Why this architecture
+
+- Keeps HTTP concerns separate from business logic.
+- Makes API versioning explicit and low-risk.
+- Produces predictable client contracts through response envelopes.
+- Supports incremental growth without early over-engineering.
+
 ## API versioning strategy
 
 Versioning is at the HTTP layer:
 
 - Registered router: `app.include_router(v1_router, prefix="/api/v1")`
 - Future version behavior changes should create new versioned endpoints/schemas while keeping services reusable when possible.
+
+Tradeoff:
+
+- Duplicating endpoint/schemas per version increases maintenance, but protects backward compatibility.
 
 ## Response model strategy
 
@@ -29,6 +40,10 @@ Benefits:
 - Consistent metadata (`request_id`, `timestamp`, pagination context).
 - Consistent machine-readable codes via `dev_code`.
 
+Tradeoff:
+
+- Envelope introduces extra response nesting, but greatly simplifies client-side error handling and observability.
+
 ## Error handling strategy
 
 Endpoints avoid local `try/except`; errors are mapped centrally in `app/core/exception_handlers.py`.
@@ -41,6 +56,10 @@ Mapped examples:
 - `DatabaseError` -> `500 / DATABASE_ERROR`
 - fallback `Exception` -> `500 / INTERNAL_ERROR`
 
+Tradeoff:
+
+- Less local flexibility in endpoint handlers, but higher global consistency.
+
 ## Observability
 
 - Request ID middleware:
@@ -49,3 +68,10 @@ Mapped examples:
 - Logging:
   - `DEBUG=true`: human-readable logs.
   - `DEBUG=false`: JSON logs.
+
+## Import boundaries
+
+- `endpoints` can depend on `services`, `schemas`, and `dependencies`.
+- `services` can depend on `db`, `schemas`, and domain exceptions.
+- `schemas` should not import from `services` or `endpoints`.
+- `core` handles shared runtime concerns and global handlers.
