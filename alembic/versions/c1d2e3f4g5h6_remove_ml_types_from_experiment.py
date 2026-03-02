@@ -26,7 +26,7 @@ def upgrade() -> None:
         batch_op.drop_index('ix_experiments_model_type_id')
         batch_op.drop_column('experiment_type_id')
         batch_op.drop_column('model_type_id')
-    
+
     # Drop experiment_types and model_types tables
     op.drop_table('experiment_types')
     op.drop_table('model_types')
@@ -48,7 +48,7 @@ def downgrade() -> None:
         sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_model_types_name'), 'model_types', ['name'], unique=False)
-    
+
     # Recreate experiment_types table
     op.create_table(
         'experiment_types',
@@ -60,7 +60,7 @@ def downgrade() -> None:
         sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_experiment_types_name'), 'experiment_types', ['name'], unique=False)
-    
+
     # Add foreign key columns back to experiments table
     with op.batch_alter_table('experiments') as batch_op:
         batch_op.add_column(sa.Column('experiment_type_id', sa.Integer(), nullable=True))
