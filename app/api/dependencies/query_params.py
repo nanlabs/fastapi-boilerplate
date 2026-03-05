@@ -4,7 +4,12 @@ from typing import Annotated
 
 from fastapi import Query
 
-from app.api.schemas.api import PaginationParams, SearchParams, SortDirection, SortingParams
+from app.api.schemas.common.params import (
+    PaginationParams,
+    SearchParams,
+    SortDirection,
+    SortingParams,
+)
 
 
 def get_pagination(

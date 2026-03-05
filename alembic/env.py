@@ -77,7 +77,7 @@ def run_migrations_online() -> None:
         # Use batch mode for SQLite to handle ALTER TABLE operations
         url = get_url()
         is_sqlite = url.startswith("sqlite")
-        
+
         context.configure(
             connection=connection,
             target_metadata=target_metadata,

@@ -1,41 +1,41 @@
 """FastAPI application entry point."""
 
-import logging
 import os
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from sqlalchemy.exc import DatabaseError
 
-from app.api.endpoints import (
-    health,
-    projects,
-)
+from app.api.endpoints.v1 import router as v1_router
+from app.api.exceptions import ConflictError, NotFoundError, SortingValidationError, ValidationError
 from app.core.config import settings
+from app.core.exception_handlers import (
+    api_validation_handler,
+    conflict_handler,
+    database_error_handler,
+    not_found_handler,
+    request_validation_handler,
+    sorting_validation_handler,
+    unexpected_error_handler,
+)
+from app.core.logging_config import configure_logging
+from app.core.middleware import RequestIDMiddleware
 from app.db.init import init_database
-
-
-def _configure_logging() -> None:
-    """Configure application logging defaults."""
-    root_logger = logging.getLogger()
-    if not root_logger.handlers:
-        logging.basicConfig(level=logging.INFO)
 
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI) -> AsyncGenerator[None]:
     """Application lifespan events."""
-    # Startup: Initialize database (create tables and seed default data)
-    _configure_logging()
-    # Skip database initialization in test environment
+    configure_logging(debug=settings.debug)
     if os.getenv("TESTING") != "true" and os.getenv("SKIP_DB_INIT") != "true":
         init_database()
     yield
-    # Shutdown: Cleanup if needed
 
 
-# Create FastAPI application
 app = FastAPI(
     title=settings.app_name,
     version=settings.app_version,
@@ -46,7 +46,17 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
-# Configure CORS
+# Exception handlers
+app.add_exception_handler(NotFoundError, not_found_handler)
+app.add_exception_handler(ConflictError, conflict_handler)
+app.add_exception_handler(SortingValidationError, sorting_validation_handler)
+app.add_exception_handler(ValidationError, api_validation_handler)
+app.add_exception_handler(RequestValidationError, request_validation_handler)
+app.add_exception_handler(DatabaseError, database_error_handler)
+app.add_exception_handler(Exception, unexpected_error_handler)
+
+# Middleware
+app.add_middleware(RequestIDMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins,
@@ -55,9 +65,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include routers (versioned)
-app.include_router(health.router, prefix=settings.api_prefix)
-app.include_router(projects.router, prefix=f"{settings.api_prefix}/projects")
+# Routers
+app.include_router(v1_router, prefix=settings.api_prefix)
+
+
+@app.get("/ping", tags=["infra"], include_in_schema=False)
+async def ping() -> JSONResponse:
+    """Minimal health probe for infrastructure checks."""
+    return JSONResponse({"status": "ok"})
 
 
 @app.get("/", tags=["root"])

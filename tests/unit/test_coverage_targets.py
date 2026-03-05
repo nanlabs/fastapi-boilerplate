@@ -8,6 +8,7 @@ import types
 from pathlib import Path
 from typing import Any, cast
 
+import pytest
 from sqlalchemy.orm import Session
 
 from app.core.config import Settings
@@ -29,7 +30,7 @@ def test_cors_origins_empty() -> None:
     assert settings.cors_origins == []
 
 
-def test_database_path_pyinstaller_meipass(tmp_path: Path, monkeypatch) -> None:
+def test_database_path_pyinstaller_meipass(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     """Resolve database path using PyInstaller executable parent."""
     settings = FrozenSettings()
     monkeypatch.setattr(sys, "_MEIPASS", "1", raising=False)
@@ -41,7 +42,9 @@ def test_database_path_pyinstaller_meipass(tmp_path: Path, monkeypatch) -> None:
     assert db_path.parent.exists()
 
 
-def test_database_path_pyinstaller_no_meipass(tmp_path: Path, monkeypatch) -> None:
+def test_database_path_pyinstaller_no_meipass(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     """Resolve database path using current working directory."""
     settings = FrozenSettings()
     monkeypatch.delattr(sys, "_MEIPASS", raising=False)
@@ -74,7 +77,7 @@ def test_get_db_yields_session() -> None:
     generator.close()
 
 
-def test_main_runs_uvicorn(monkeypatch) -> None:
+def test_main_runs_uvicorn(monkeypatch: pytest.MonkeyPatch) -> None:
     """Run app.main __main__ block with patched uvicorn."""
     captured_args: list[object] = []
     captured_kwargs: dict[str, object] = {}

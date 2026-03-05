@@ -48,7 +48,7 @@ def _test_engine(test_db_path: Path) -> Generator[Engine]:
 
 
 @pytest.fixture(name="db_session")
-def _db_session(test_engine) -> Generator[Session]:
+def _db_session(test_engine: Engine) -> Generator[Session]:
     """Create a test database session."""
     testing_session_local = sessionmaker(autocommit=False, autoflush=False, bind=test_engine)
     session = testing_session_local()
@@ -63,7 +63,7 @@ def _db_session(test_engine) -> Generator[Session]:
 def _client(db_session: Session) -> Generator[TestClient]:
     """Create a test client with database override."""
 
-    def override_get_db():
+    def override_get_db() -> Generator[Session]:
         yield db_session
 
     app.dependency_overrides[get_db] = override_get_db

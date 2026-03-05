@@ -1,89 +1,92 @@
-# 📝 API Documentation
+# API
 
-## Available Endpoints
+## Base URL and versioning
 
-This documentation describes the endpoints available in the boilerplate. Your project's specific endpoints will vary based on your needs.
+- Development: `http://localhost:8000`
+- Version prefix: `/api/v1`
 
-## Interactive Documentation
+Tip: keep a custom `X-Request-ID` while testing locally to correlate requests with logs.
 
-Once the server is running, you can access the interactive documentation:
+## Health endpoints
 
-- **Swagger UI**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
+- `GET /ping`: infrastructure probe, no envelope.
+  - Response: `{ "status": "ok" }`
+- `GET /api/v1/healthz`: API client health check, with envelope.
 
-## API Structure
+## Standard response envelope
 
-### Base URL
-
-```
-Development: http://localhost:8000
-Production: https://your-domain.com
-```
-
-### Versioning
-
-The API uses URL versioning:
-
-```
-/api/v1/...
-```
-
-## Base Endpoints
-
-### Health Check
-
-#### `GET /api/v1/healthz`
-
-Checks the API status.
-
-**Response**
+All API responses (success and errors) use:
 
 ```json
 {
-  "status": "healthy",
-  "timestamp": "2026-01-30T10:00:00Z",
-  "service": "fastapi-boilerplate"
+  "success": true,
+  "status_code": 200,
+  "dev_code": "PROJECTS_LISTED",
+  "message": "Projects retrieved successfully",
+  "data": [],
+  "errors": [],
+  "metadata": {
+    "request_id": "550e8400-e29b-41d4-a716-446655440000",
+    "timestamp": "2026-03-01T10:00:00Z",
+    "pagination": { "skip": 0, "limit": 100, "total": 42 },
+    "sort": { "sort_by": "created_at", "sort_direction": "desc" },
+    "search": { "search": null }
+  }
 }
 ```
 
-**Status Codes**
-- `200 OK`: API working correctly
-- `503 Service Unavailable`: API with issues
-
-## Example Endpoints
-
-### Projects
-
-#### `GET /api/v1/projects`
-
-Lists all projects.
-
-**Query Parameters**
-- `skip` (int, optional): Number of records to skip (default: 0)
-- `limit` (int, optional): Maximum number of records (default: 100)
-
-**Response**
+Validation error example (`422`):
 
 ```json
 {
-  "projects": [
-    {
-      "id": "uuid-here",
-      "name": "Project Name",
-      "description": "Project description",
-      "created_at": "2026-01-30T10:00:00Z",
-      "updated_at": "2026-01-30T10:00:00Z"
-    }
+  "success": false,
+  "status_code": 422,
+  "dev_code": "VALIDATION_ERROR",
+  "message": "Request validation failed",
+  "data": null,
+  "errors": [
+    { "field": "name", "message": "String should have at least 1 character" }
   ],
-  "total": 1
+  "metadata": {
+    "request_id": "550e8400-e29b-41d4-a716-446655440000",
+    "timestamp": "2026-03-01T10:00:00Z"
+  }
 }
 ```
 
-#### `POST /api/v1/projects`
+## `dev_code` reference
 
-Creates a new project.
+| Situation | `dev_code` |
+|---|---|
+| List success | `PROJECTS_LISTED` |
+| Retrieve success | `PROJECT_RETRIEVED` |
+| Create success | `PROJECT_CREATED` |
+| Update success | `PROJECT_UPDATED` |
+| Delete success | `PROJECT_DELETED` |
+| Not found | `NOT_FOUND` |
+| Conflict | `CONFLICT` |
+| Invalid sort field | `INVALID_SORT_FIELD` |
+| Request validation | `VALIDATION_ERROR` |
+| Database failure | `DATABASE_ERROR` |
+| Unexpected failure | `INTERNAL_ERROR` |
 
-**Request Body**
+## Projects endpoints
+
+### `GET /api/v1/projects`
+
+Query params:
+
+- `skip` (default `0`)
+- `limit` (default `100`, max `1000`)
+- `sort_by`
+- `sort_direction` (`asc` or `desc`)
+- `search`
+
+Returns envelope with `metadata.pagination.total`.
+
+### `POST /api/v1/projects`
+
+Request body:
 
 ```json
 {
@@ -92,413 +95,65 @@ Creates a new project.
 }
 ```
 
-**Response** (201 Created)
+Response: `201` envelope with `dev_code: PROJECT_CREATED`.
+
+### `GET /api/v1/projects/{project_id}`
+
+Response: `200` envelope with `dev_code: PROJECT_RETRIEVED`, or `404` envelope with `dev_code: NOT_FOUND`.
+
+### `PATCH /api/v1/projects/{project_id}`
+
+Partial update endpoint. Response: `200` envelope with `dev_code: PROJECT_UPDATED`.
+
+### `DELETE /api/v1/projects/{project_id}`
+
+Response is `200` envelope (not `204`) with:
 
 ```json
 {
-  "id": "uuid-here",
-  "name": "New Project",
-  "description": "Project description",
-  "created_at": "2026-01-30T10:00:00Z",
-  "updated_at": "2026-01-30T10:00:00Z"
+  "success": true,
+  "dev_code": "PROJECT_DELETED",
+  "data": null
 }
 ```
 
-#### `GET /api/v1/projects/{project_id}`
+## OpenAPI
 
-Gets a specific project.
+- Swagger UI: `http://localhost:8000/docs`
+- ReDoc: `http://localhost:8000/redoc`
 
-**Path Parameters**
-- `project_id` (string): Project ID
+## Client integration examples
 
-**Response**
-
-```json
-{
-  "id": "uuid-here",
-  "name": "Project Name",
-  "description": "Project description",
-  "created_at": "2026-01-30T10:00:00Z",
-  "updated_at": "2026-01-30T10:00:00Z"
-}
-```
-
-**Status Codes**
-- `200 OK`: Project found
-- `404 Not Found`: Project doesn't exist
-
-#### `PUT /api/v1/projects/{project_id}`
-
-Updates a project.
-
-**Path Parameters**
-- `project_id` (string): Project ID
-
-**Request Body**
-
-```json
-{
-  "name": "Updated Name",
-  "description": "Updated description"
-}
-```
-
-**Response**
-
-```json
-{
-  "id": "uuid-here",
-  "name": "Updated Name",
-  "description": "Updated description",
-  "created_at": "2026-01-30T10:00:00Z",
-  "updated_at": "2026-01-30T12:00:00Z"
-}
-```
-
-#### `DELETE /api/v1/projects/{project_id}`
-
-Deletes a project.
-
-**Path Parameters**
-- `project_id` (string): Project ID
-
-**Response** (204 No Content)
-
-No body.
-
-**Status Codes**
-- `204 No Content`: Project deleted
-- `404 Not Found`: Project doesn't exist
-
-## Data Models
-
-### Project
-
-```python
-{
-  "id": str,              # Project UUID
-  "name": str,            # Project name (required)
-  "description": str,     # Description (optional)
-  "created_at": datetime, # Creation date
-  "updated_at": datetime  # Update date
-}
-```
-
-### Experiment
-
-```python
-{
-  "id": str,              # Experiment UUID
-  "name": str,            # Experiment name
-  "project_id": str,      # Parent project ID
-  "status": str,          # Status: pending, running, completed, failed
-  "created_at": datetime,
-  "updated_at": datetime
-}
-```
-
-## Pagination
-
-Endpoints returning lists support pagination:
-
-```
-GET /api/v1/projects?skip=0&limit=10
-```
-
-**Response**
-
-```json
-{
-  "items": [...],
-  "total": 100,
-  "skip": 0,
-  "limit": 10
-}
-```
-
-## Filters
-
-Endpoints can support filters via query parameters:
-
-```
-GET /api/v1/projects?name=search&status=active
-```
-
-## Sorting
-
-Sorting via query parameter:
-
-```
-GET /api/v1/projects?order_by=created_at&order=desc
-```
-
-## Error Handling
-
-### Error Response Format
-
-```json
-{
-  "detail": "Error message describing what went wrong"
-}
-```
-
-### Status Codes
-
-- `200 OK`: Successful operation
-- `201 Created`: Resource created successfully
-- `204 No Content`: Successful operation with no response content
-- `400 Bad Request`: Invalid request
-- `401 Unauthorized`: Not authenticated
-- `403 Forbidden`: Not authorized
-- `404 Not Found`: Resource not found
-- `422 Unprocessable Entity`: Validation errors
-- `500 Internal Server Error`: Server error
-
-### Validation Errors (422)
-
-```json
-{
-  "detail": [
-    {
-      "loc": ["body", "email"],
-      "msg": "value is not a valid email address",
-      "type": "value_error.email"
-    }
-  ]
-}
-```
-
-## Authentication
-
-*Note: The base boilerplate doesn't include authentication. Here's an example of how you could implement it.*
-
-### JWT Bearer Token
-
-```http
-GET /api/v1/projects
-Authorization: Bearer <token>
-```
-
-### Login Endpoint
-
-```http
-POST /api/v1/auth/login
-Content-Type: application/json
-
-{
-  "username": "user@example.com",
-  "password": "password123"
-}
-```
-
-**Response**
-
-```json
-{
-  "access_token": "eyJ0eXAiOiJKV1QiLCJhbGc...",
-  "token_type": "bearer",
-  "expires_in": 3600
-}
-```
-
-## Rate Limiting
-
-*Note: Not implemented in the base boilerplate.*
-
-Example rate limiting headers:
-
-```http
-X-RateLimit-Limit: 100
-X-RateLimit-Remaining: 95
-X-RateLimit-Reset: 1640995200
-```
-
-## CORS
-
-The boilerplate is configured for CORS. Configure origins in `.env`:
-
-```env
-CORS_ORIGINS=http://localhost:3000,https://your-frontend.com
-```
-
-## Webhooks
-
-*Not implemented in the base boilerplate.*
-
-## WebSockets
-
-*Not implemented in the base boilerplate.*
-
-If you need WebSockets, FastAPI supports them:
-
-```python
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    await websocket.accept()
-    while True:
-        data = await websocket.receive_text()
-        await websocket.send_text(f"Message: {data}")
-```
-
-## Examples
-
-### cURL Examples
+### cURL
 
 ```bash
-# Health check
-curl http://localhost:8000/api/v1/healthz
-
-# List projects
-curl http://localhost:8000/api/v1/projects
-
-# Create project
-curl -X POST http://localhost:8000/api/v1/projects \
-  -H "Content-Type: application/json" \
-  -d '{"name": "New Project", "description": "Description"}'
-
-# Get project
-curl http://localhost:8000/api/v1/projects/{project_id}
-
-# Update project
-curl -X PUT http://localhost:8000/api/v1/projects/{project_id} \
-  -H "Content-Type: application/json" \
-  -d '{"name": "Updated Name"}'
-
-# Delete project
-curl -X DELETE http://localhost:8000/api/v1/projects/{project_id}
+curl -X GET "http://localhost:8000/api/v1/projects" \
+  -H "Accept: application/json" \
+  -H "X-Request-ID: api-docs-example"
 ```
 
-### Python Client Example
+### TypeScript fetch
 
-```python
-import httpx
+```typescript
+type ApiResponse<T> = {
+  success: boolean;
+  dev_code: string;
+  message: string;
+  data: T | null;
+  errors: Array<{ field?: string; message: string }>;
+  metadata: { request_id: string; timestamp: string };
+};
 
-# Base client
-client = httpx.Client(base_url="http://localhost:8000")
-
-# Create project
-response = client.post(
-    "/api/v1/projects",
-    json={
-        "name": "New Project",
-        "description": "Description"
-    }
-)
-project = response.json()
-print(project)
-
-# List projects
-response = client.get("/api/v1/projects")
-projects = response.json()
-print(projects)
+async function listProjects(): Promise<void> {
+  const resp = await fetch("http://localhost:8000/api/v1/projects");
+  const body = (await resp.json()) as ApiResponse<Array<{ id: number; name: string }>>;
+  if (!body.success) throw new Error(`${body.dev_code}: ${body.message}`);
+  console.log(body.data);
+}
 ```
 
-### JavaScript/TypeScript Example
+## Related docs
 
-```javascript
-// Using fetch
-const response = await fetch('http://localhost:8000/api/v1/projects', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    name: 'New Project',
-    description: 'Description'
-  })
-});
-
-const project = await response.json();
-console.log(project);
-```
-
-## OpenAPI Schema
-
-The OpenAPI schema is available at:
-
-```
-GET /openapi.json
-```
-
-You can use this to automatically generate clients with tools like:
-- [openapi-generator](https://github.com/OpenAPITools/openapi-generator)
-- [swagger-codegen](https://github.com/swagger-api/swagger-codegen)
-
-## Monitoring
-
-### Health Check
-
-```
-GET /api/v1/healthz
-```
-
-Returns the API status and its dependencies.
-
-### Metrics
-
-*Not implemented in the base boilerplate.*
-
-To add metrics, consider using:
-- [Prometheus](https://prometheus.io/)
-- [OpenTelemetry](https://opentelemetry.io/)
-
-## Best Practices
-
-### 1. Always use proper HTTP methods
-
-- `GET`: Retrieve data
-- `POST`: Create new resources
-- `PUT`: Update entire resources
-- `PATCH`: Partial updates
-- `DELETE`: Remove resources
-
-### 2. Use proper status codes
-
-Return appropriate HTTP status codes.
-
-### 3. Version your API
-
-Use URL versioning: `/api/v1/...`
-
-### 4. Document your endpoints
-
-Use docstrings and OpenAPI descriptions:
-
-```python
-@router.get("/projects", response_model=ProjectListResponse)
-async def list_projects(
-    skip: int = 0,
-    limit: int = 100,
-    db: Session = Depends(get_db)
-):
-    """
-    List all projects.
-    
-    Parameters:
-    - skip: Number of records to skip
-    - limit: Maximum number of records to return
-    
-    Returns list of projects with pagination info.
-    """
-    ...
-```
-
-### 5. Validate input
-
-Use Pydantic models for automatic validation.
-
-### 6. Handle errors gracefully
-
-```python
-try:
-    result = service.operation()
-except ValueError as e:
-    raise HTTPException(status_code=400, detail=str(e))
-```
-
-## Additional Resources
-
-- [FastAPI Documentation](https://fastapi.tiangolo.com/)
-- [OpenAPI Specification](https://swagger.io/specification/)
-- [HTTP Status Codes](https://httpstatuses.com/)
-- [REST API Best Practices](https://restfulapi.net/)
+- `ARCHITECTURE.md` for response and error strategy decisions.
+- `DEVELOPMENT.md` for implementation conventions in endpoints/services.
+- `TESTING.md` for endpoint assertion patterns.

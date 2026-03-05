@@ -1,4 +1,4 @@
-"""Project API schemas."""
+"""Project schemas for API v1."""
 
 import datetime
 
@@ -6,7 +6,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 
 class ProjectBase(BaseModel):
-    """Schema for project base."""
+    """Base project schema."""
 
     name: str = Field(..., description="Project name", min_length=1, max_length=255)
     description: str | None = Field(None, description="Project description", max_length=1000)
@@ -15,7 +15,6 @@ class ProjectBase(BaseModel):
 class ProjectCreate(ProjectBase):
     """Schema for creating a new project."""
 
-    # pylint: disable=duplicate-code
     model_config = ConfigDict(
         json_schema_extra={
             "example": {
@@ -25,16 +24,13 @@ class ProjectCreate(ProjectBase):
         }
     )
 
-    # pylint: enable=duplicate-code
-
 
 class ProjectUpdate(BaseModel):
-    """Schema for updating a project."""
+    """Schema for updating a project (all fields optional)."""
 
     name: str | None = Field(None, description="Project name", min_length=1, max_length=255)
     description: str | None = Field(None, description="Project description", max_length=1000)
 
-    # pylint: disable=duplicate-code
     model_config = ConfigDict(
         json_schema_extra={
             "example": {
@@ -44,17 +40,14 @@ class ProjectUpdate(BaseModel):
         }
     )
 
-    # pylint: enable=duplicate-code
-
 
 class ProjectResponse(ProjectBase):
-    """Schema for project response."""
+    """Schema for project API responses."""
 
     id: int = Field(..., description="Project ID")
     created_at: datetime.datetime = Field(..., description="Creation timestamp")
     updated_at: datetime.datetime = Field(..., description="Last update timestamp")
 
-    # pylint: disable=duplicate-code
     model_config = ConfigDict(
         from_attributes=True,
         json_schema_extra={
@@ -62,10 +55,8 @@ class ProjectResponse(ProjectBase):
                 "id": 1,
                 "name": "Customer Insights",
                 "description": "Analytics project focused on customer behavior trends",
-                "created_at": "2025-01-20T10:30:00.000000",
-                "updated_at": "2025-01-20T10:30:00.000000",
+                "created_at": "2026-01-20T10:30:00.000000",
+                "updated_at": "2026-01-20T10:30:00.000000",
             }
         },
     )
-
-    # pylint: enable=duplicate-code

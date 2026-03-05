@@ -1,0 +1,18 @@
+APPLY_FIXES: none
+FLAVOR_SUGGESTIONS: false
+PRINT_ALPACA: false
+SHOW_ELAPSED_TIME: true
+
+# Start with a focused, backend-friendly lint surface to keep signal high.
+ENABLE_LINTERS:
+  - PYTHON_RUFF
+  - MARKDOWN_MARKDOWNLINT
+  - YAML_YAMLLINT
+  - JSON_JSONLINT
+  - REPOSITORY_CHECKOV
+
+# Avoid scanning generated/cached directories.
+FILTER_REGEX_EXCLUDE: '(\.git/|\.venv/|\.mypy_cache/|\.ruff_cache/|\.pytest_cache/|htmlcov/|\.cursor/)'
+
+# Keep CI logs useful in PRs.
+MARKDOWN_MARKDOWNLINT_DISABLE_ERRORS: false

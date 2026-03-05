@@ -1,7 +1,12 @@
 """Unit tests for app.api.dependencies.query_params."""
 
 from app.api.dependencies.query_params import get_pagination, get_search, get_sorting
-from app.api.schemas.api import PaginationParams, SearchParams, SortDirection, SortingParams
+from app.api.schemas.common.params import (
+    PaginationParams,
+    SearchParams,
+    SortDirection,
+    SortingParams,
+)
 
 
 class TestGetPagination:

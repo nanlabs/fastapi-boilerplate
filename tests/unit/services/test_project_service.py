@@ -4,8 +4,13 @@ import pytest
 from sqlalchemy.orm import Session
 
 from app.api.exceptions import ConflictError, NotFoundError, SortingValidationError
-from app.api.schemas.api import PaginationParams, SearchParams, SortDirection, SortingParams
-from app.api.schemas.project import ProjectCreate, ProjectUpdate
+from app.api.schemas.common.params import (
+    PaginationParams,
+    SearchParams,
+    SortDirection,
+    SortingParams,
+)
+from app.api.schemas.v1.project import ProjectCreate, ProjectUpdate
 from app.api.services.project_service import ProjectService
 from app.db.models.project import Project
 
@@ -39,9 +44,7 @@ class TestListProjects:
         result = service.list_projects(pagination, sorting, search_params)
 
         assert result.data == []
-        assert result.pagination == pagination
-        assert result.sort == sorting
-        assert result.search == search_params
+        assert result.total == 0
 
     def test_list_projects_with_data(self, db_session: Session) -> None:
         """List projects with existing data."""
@@ -57,6 +60,7 @@ class TestListProjects:
 
         result = service.list_projects(pagination, sorting, search_params)
 
+        assert result.total == 2
         assert len(result.data) == 2
         assert result.data[0].name in ["Project 1", "Project 2"]
         assert result.data[1].name in ["Project 1", "Project 2"]
@@ -76,6 +80,7 @@ class TestListProjects:
 
         result = service.list_projects(pagination, sorting, search_params)
 
+        assert result.total == 1
         assert len(result.data) == 1
         assert result.data[0].name == "Analytics"
 
@@ -93,6 +98,7 @@ class TestListProjects:
 
         result = service.list_projects(pagination, sorting, search_params)
 
+        assert result.total == 1
         assert len(result.data) == 1
         assert result.data[0].name == "Search Test A"
 
@@ -110,6 +116,7 @@ class TestListProjects:
 
         result = service.list_projects(pagination, sorting, search_params)
 
+        assert result.total == 2
         assert len(result.data) == 2
         assert result.data[0].name == "Alpha Project"
         assert result.data[1].name == "Zebra Project"
@@ -128,6 +135,7 @@ class TestListProjects:
 
         result = service.list_projects(pagination, sorting, search_params)
 
+        assert result.total == 2
         assert len(result.data) == 2
         assert result.data[0].name == "Zebra Project"
         assert result.data[1].name == "Alpha Project"
@@ -146,6 +154,7 @@ class TestListProjects:
 
         result = service.list_projects(pagination, sorting, search_params)
 
+        assert result.total == 2
         assert len(result.data) == 2
         assert result.data[0].id < result.data[1].id
 
@@ -174,6 +183,7 @@ class TestListProjects:
 
         result = service.list_projects(pagination, sorting, search_params)
 
+        assert result.total == 5
         assert len(result.data) == 2
 
 
