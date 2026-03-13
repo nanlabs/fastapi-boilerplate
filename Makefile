@@ -7,7 +7,7 @@
 #
 # All commands are designed to run INSIDE the dev container environment.
 
-.PHONY: help ensure-devcontainer install install-dev bootstrap doctor check-docs clean test test-unit test-integration test-coverage lint format autofix type-check all-checks run dev init-db migration-create migration-upgrade migration-downgrade migration-history migration-current migration-stamp migration-downgrade-to migration-upgrade-to migration-show migration-merge
+.PHONY: help ensure-devcontainer install install-dev bootstrap doctor check-docs clean test test-unit test-integration test-coverage lint format format-check autofix type-check all-checks run dev init-db migration-create migration-upgrade migration-downgrade migration-history migration-current migration-stamp migration-downgrade-to migration-upgrade-to migration-show migration-merge
 
 DIR ?= .
 
@@ -32,7 +32,8 @@ help:
 	@echo ""
 	@echo "[QUALITY] Code Quality:"
 	@echo "  lint            - Run code linting with ruff"
-	@echo "  format          - Format code with ruff"
+	@echo "  format          - Format code with ruff (applies changes)"
+	@echo "  format-check    - Check code formatting without applying changes (used in CI)"
 	@echo "  autofix         - Auto-fix code formatting and imports"
 	@echo "  type-check      - Run type checking with mypy"
 	@echo "  check-docs      - Validate markdown docs links"
@@ -153,6 +154,11 @@ lint: ensure-devcontainer
 format: ensure-devcontainer
 	@echo "INFO: Formatting code..."
 	uv run ruff format $(or $(filter-out $@,$(MAKECMDGOALS)),$(DIR))
+
+# Check code formatting without applying changes (safe for CI)
+format-check: ensure-devcontainer
+	@echo "INFO: Checking code formatting..."
+	uv run ruff format --check $(or $(filter-out $@,$(MAKECMDGOALS)),$(DIR))
 
 # Auto-fix code formatting and imports
 autofix: ensure-devcontainer
