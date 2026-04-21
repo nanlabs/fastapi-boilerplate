@@ -22,7 +22,7 @@ dependencies = [
   "fastapi>=0.128.0",
   "pydantic-settings>=2.12.0",
   "pydantic>=2.12.0",
-  "python-dotenv>=1.2.0",
+  "python-dotenv>=1.2.2",
   "sqlalchemy>=2.0.45",
   "uvicorn>=0.40.0",
 ]
