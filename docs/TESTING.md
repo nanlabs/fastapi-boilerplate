@@ -55,6 +55,10 @@ assert body["dev_code"] == "NOT_FOUND"
 assert body["data"] is None
 ```
 
+## Coverage rationale
+
+Tests for `app/db/init.py` and `app/db/seed_data.py` are intentionally minimal. The seed data mechanism (`SeedDataConfig`) ships as an empty extensible class — there is no domain logic to cover until the consumer project populates it. If you add seed models, add the corresponding tests alongside them.
+
 ## Related docs
 
 - `DEVELOPMENT.md` for test-first workflow expectations.
