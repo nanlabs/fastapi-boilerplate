@@ -43,7 +43,7 @@ See [Testing Guide](./docs/TESTING.md) for patterns and fixtures.
 
 ## CI quality gates
 
-- `fast-quality`: docs + lint + format checks.
+- `fast-quality`: docs lint + format validation (`make format-check`) — read-only, fails if code is not already formatted.
 - `full-quality`: strict quality checks (`make all-checks`).
 - `tests`: full test suite (`make test`).
 - `mega-linter`: runs on PR/push with `.mega-linter.yml` (currently non-blocking rollout mode).
